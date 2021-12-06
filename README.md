@@ -1,4 +1,4 @@
-## Programming language based
+## Programming Languages
 
 - [Python](python)
 - [Golang](golang)
