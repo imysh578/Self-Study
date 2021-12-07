@@ -9,7 +9,6 @@ import "fmt"
 
 // import : using other packages
 // cannot import main package
-// fmt :
 
 func main() {
 	// func : function, functional unit
