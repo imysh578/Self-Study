@@ -5,6 +5,8 @@
 ## Index
 [1. HelloWorld](1.HelloWorld)  
 [2. Variable](2.Variable)  
-[3. fmt](3.fmt) 
+[3. InputOuput](3.InputOuput) 
+[4. Operator](4.Operator) 
+[5. Function](5.Function) 
 
 
