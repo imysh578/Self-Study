@@ -1,7 +1,7 @@
 ## Programming Languages
 
 - [Python](python)
-- [Golang](golang)
+- [Golang](go)
 - [C++](cpp)
 - [Javascript](js)
 - [Solidity](solidity)
