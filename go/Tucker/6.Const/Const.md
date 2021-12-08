@@ -1,5 +1,5 @@
 ### const
-- struct
+- declare
 const name type = value  
 - characteristics
   - const doesn't have own memory address
@@ -10,7 +10,7 @@ const PI float64 = 3.141592
 ```
 
 ### iota
-- struct
+- declare
 ```
 const (
   name1 type = iota
@@ -52,7 +52,7 @@ const (
 ```
 
 ### const without type
-- struct
+- declare
 const name = value  
 ** The type will be defined when it will be used
 
