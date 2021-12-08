@@ -37,7 +37,6 @@ y := []int{10, 30, 50} // length can be changed. => dynamic
 
 
 ### Multiple Array
-- 
 ```
 [len1][len2]type
 [len1][len2][len3]type
