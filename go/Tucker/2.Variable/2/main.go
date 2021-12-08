@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	// many ways to declare variables
+	// many ways to Expression variables
 	var a int = 3
 	var b int
 	var c = 4

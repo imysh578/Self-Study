@@ -10,7 +10,8 @@
 [5. Function](5.Function)  
 [6. Const](6.Const)  
 [7. if](7.if)  
-[8. Switch](7.Switch)  
-[9. For](7.For)  
+[8. Switch](8.Switch)  
+[9. For](9.For)  
+[10. Array](10.Array)  
 
 

@@ -1,7 +1,7 @@
 ## Switch
 
 ### How to use
-- declare
+- Expression
 ```
 switch variable {
 case value1:

@@ -1,6 +1,6 @@
 ## For
 ### How to use?
-- declare
+- Expression
 ```
 for first; condition; after {
   ...
