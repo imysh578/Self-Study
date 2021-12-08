@@ -2,7 +2,7 @@
 
 - [Python](python)
 - [Golang](go)
-- [C++](cpp)
+<!-- - [C++](cpp) -->
 - [Javascript](js)
 - [Solidity](solidity)
 - [Rust](Rust)
