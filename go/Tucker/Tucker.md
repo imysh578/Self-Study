@@ -14,5 +14,8 @@
 [9. For](09.For)  
 [10. Array](10.Array)  
 [11. Structure](11.Structure)  
+[12. Pointer](12.Pointer)  
+[13. String](13.String)  
+[14. Module & Package](14.ModulePackage)  
 
 
