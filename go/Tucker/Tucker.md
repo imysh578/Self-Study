@@ -1,6 +1,7 @@
 ## Tucker의 Go 언어 프로그래밍
 > (https://www.youtube.com/watch?v=ELOihQ1HYBY&list=PLy-g2fnSzUTBHwuXkWQ834QHDZwLx6v6j&index=5)
-- studying Go language by referring to this Youtube
+- Studying Go language by referring to this Youtube
+- Trying to write down in English, but sometimes it is written in Korean.
 
 ## Index
 [1. HelloWorld](01.HelloWorld)  
@@ -17,5 +18,7 @@
 [12. Pointer](12.Pointer)  
 [13. String](13.String)  
 [14. Module & Package](14.ModulePackage)  
+[15. Rand & Time Package](15.RandTime)  
+[16. Slice](16.Slice)  
 
 

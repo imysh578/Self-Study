@@ -4,7 +4,7 @@
 
 
 ### How to use?
-- Expression
+- Declaration
 ```
 type name struct {
   fieldName1 type

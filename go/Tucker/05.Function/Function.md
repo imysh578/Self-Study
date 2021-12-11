@@ -1,6 +1,6 @@
 ## Function  
 ### structure  
-keyword function_name(param_name param_type) return type {}  
+-keyword function_name(param_name param_type) return type {}  
 
 ** Example **  
 ```
@@ -8,6 +8,8 @@ func Add(a int, b int) int {
   return a+b  
 }
 ```
+
+- function's arguments are r-values(right-values) => copy data
 
 ### Recursive Function
 

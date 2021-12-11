@@ -1,5 +1,5 @@
 ### How to use if
-- Expression
+- Declaration
 ```
 if condition {
   ...

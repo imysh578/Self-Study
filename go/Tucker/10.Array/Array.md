@@ -4,7 +4,7 @@
 - One of the Data structures
 
 ### How to use
-- Expression
+- Declaration
 ```
 var name [length]type
 ```

@@ -3,7 +3,7 @@
 - the type to have memory address as a value
 
 ### How to use?
-- Expression
+- Declaration
 ```
 var name *type
 ```
