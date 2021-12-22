@@ -2,7 +2,7 @@
 
 YYMMDD=`date "+%y%m%d"`
 
-dir="/home/imysh578"
+dir="/home/${whoami}"
 folder="/date_log"
 file="Date_${YYMMDD}.txt"
 
@@ -14,7 +14,7 @@ then
 	then
 		echo $file already exists
 		date > $file
-		echo Rewrote $file
+		echo Overwrote $file
 	else
 		cd $dir$folder
 		date > $file
