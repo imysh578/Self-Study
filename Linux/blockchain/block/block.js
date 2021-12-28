@@ -9,7 +9,7 @@ class Block {
 }
 
 class BlockHeader {
-	constructor(version, previousBlockHash, merkleRoot, timestamp, bit, nonce){
+	constructor(version, previousBlockHash, timestamp, merkleRoot, bit, nonce){
 		this.version = version
 		this.previousBlockHash = previousBlockHash
 		this.merkleRoot = merkleRoot
