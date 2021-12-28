@@ -4,5 +4,5 @@
 - [Linux](Linux)
 <!-- - [Solidity](solidity) -->
 <!-- - [Python](python) -->
-- <!-- - [Rust](Rust) -->
+<!-- - [Rust](Rust) -->
 <!-- - [C++](cpp) -->
