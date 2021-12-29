@@ -45,10 +45,11 @@ function addBlock(newBlock) {
   return false;
 }
 
-const Block = nextBlock(['new Transaction'])
-addBlock(Block)
-console.log(Block);
+// const Block = nextBlock(['new Transaction'])
+// addBlock(Block)
+// console.log(Block);
 // Blocks.forEach((block) => {
 //   console.log(isValidBlockStructure(block)); 
 // })
 
+module.exports = {addBlock}

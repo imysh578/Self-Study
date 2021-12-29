@@ -125,4 +125,4 @@ addBlock(['transaction5'])
 
 // 과제 : var, let, const 차이
 
-module.exports = {createHash, Blocks, getLastBlock, nextBlock}
+module.exports = {createHash, Blocks, getLastBlock, nextBlock, addBlock, getBlocks, getVersion}
