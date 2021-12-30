@@ -88,6 +88,7 @@ function responseAllChainMsg() {
 	};
 }
 
+
 function handleBlockChainResponse(msg) {
 	return 0;
 }
