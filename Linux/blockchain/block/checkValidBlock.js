@@ -52,4 +52,4 @@ function addBlock(newBlock) {
 //   console.log(isValidBlockStructure(block)); 
 // })
 
-module.exports = {addBlock}
+module.exports = {addBlock, isValidNewBlock, isValidBlockStructure}

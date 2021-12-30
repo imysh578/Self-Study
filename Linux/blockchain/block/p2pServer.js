@@ -1,14 +1,18 @@
+// p2pServer.js
 const p2p_port = process.env.P2P_PORT || 6001;
 
 const WebSocket = require("ws");
 
-function initP2PServer() {
-	const server = WebSocket.server({ port: p2p_port });
+function initP2PServer(test_port) {
+	const server = new WebSocket.Server({ port: test_port });
 	server.on("connection", (ws) => {
 		initConnection(ws);
 	});
-	console.log("Listening webSocket port : " + p2p_port);
+	console.log("Listening webSocket port : " + test_port);
 }
+initP2PServer(6001);
+initP2PServer(6002);
+initP2PServer(6003);
 
 let sockets = [];
 
@@ -34,6 +38,7 @@ function connectToPeers(newPeers) {
 	newPeers.forEach((peer) => {
 		const ws = new WebSocket(peer);
 		ws.on("open", () => {
+			console.log(peer);
 			initConnection(ws);
 		});
 		ws.on("error", () => {
@@ -41,4 +46,4 @@ function connectToPeers(newPeers) {
     });
 	});
 }
-module.exports = {connectToPeers}
+module.exports = {connectToPeers, getSockets}

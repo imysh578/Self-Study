@@ -1,8 +1,15 @@
+// httpServer.js
 const express = require("express");
 const bodyParser = require("body-parser");
-const {getLastBlock, getBlocks, nextBlock, getVersion} = require('./chainedBlock.js')
-const {addBlock} = require('./checkValidBlock.js')
-const {connectToPeers} = require('./p2pServer.js')
+const {
+	getLastBlock,
+	getBlocks,
+	nextBlock,
+	getVersion,
+	Blocks,
+} = require("./chainedBlock.js");
+const { addBlock } = require("./checkValidBlock.js");
+const { connectToPeers, getSockets } = require("./p2pServer.js");
 
 const http_port = process.env.HTTP_PORT || 3001;
 
@@ -13,8 +20,19 @@ function initHttpServer() {
 	// curl -H "Content-type:application/json" --data "{\"data\" : [ \"ws://localhost:6002\", \"ws://localhost:6003\" ] }"
 
 	app.post("/addPeers", (req, res) => {
-		connectToPeers();
-	} )
+		const data = req.body.data || [];
+		console.log(data);
+		connectToPeers(data);
+		res.send(data);
+	});
+
+	app.get("/peers", (req, res) => {
+		let socketInfo = []
+		getSockets().forEach((s) => {
+			socketInfo.push(s._socket.remoteAddress + ":" + s._socket.remotePort)
+		})
+		res.send(socketInfo);
+	})
 
 	app.get("/blocks", (req, res) => {
 		res.send(getBlocks());
@@ -22,12 +40,10 @@ function initHttpServer() {
 
 	app.post("/mineBlock", (req, res) => {
 		const data = req.body.data || [];
-		console.log(data);
 		const block = nextBlock(data);
+		const test = addBlock(block);
 		console.log(block);
-		console.log(getLastBlock())
-		addBlock(block);
-		console.log(getLastBlock()); 
+		console.log(test);
 		res.send(getLastBlock());
 	});
 
