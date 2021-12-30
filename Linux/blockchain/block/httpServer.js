@@ -9,7 +9,7 @@ const {
 	Blocks,
 } = require("./chainedBlock.js");
 const { addBlock } = require("./checkValidBlock.js");
-const { connectToPeers, getSockets } = require("./p2pServer.js");
+const { connectToPeers, getSockets, queryAllMsg } = require("./p2pServer.js");
 
 const http_port = process.env.HTTP_PORT || 3001;
 
@@ -17,7 +17,14 @@ function initHttpServer() {
 	const app = express();
 	app.use(bodyParser.json());
 
-	// curl -H "Content-type:application/json" --data "{\"data\" : [ \"ws://localhost:6002\", \"ws://localhost:6003\" ] }"
+	// # add peers on 6002, 6003
+	// $ curl -H "Content-type:application/json" --data "{\"data\" : [ \"ws://localhost:6002\", \"ws://localhost:6003\" ]}" http://localhost:3001/addPeers
+	// $ curl -H "Content-type:application/json" --data '{"data" : ["ws://localhost:6002", "ws://localhost:6003" ]}' http://localhost:3001/addPeers
+	// # display peers 
+	// $ curl -X GET http://localhost:3001/peers  | python3 -m json.tool
+	app.get("/queryAllmsg", (req,res)=>{
+		res.send(queryAllMsg())
+	})
 
 	app.post("/addPeers", (req, res) => {
 		const data = req.body.data || [];
