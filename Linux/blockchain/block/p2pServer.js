@@ -2,7 +2,8 @@
 const p2p_port = process.env.P2P_PORT || 6001;
 
 const WebSocket = require("ws");
-const { getLastBlock, getBlocks } = require("./chainedBlock");
+const { getLastBlock, getBlocks, createHash } = require("./chainedBlock");
+const { addBlock } = require("./checkValidBlock");
 
 function initP2PServer(test_port) {
 	const server = new WebSocket.Server({ port: test_port });
@@ -19,6 +20,8 @@ let sockets = [];
 
 function initConnection(ws) {
 	sockets.push(ws);
+	initMessageHandler(ws);
+	initErrorHandler(ws);
 }
 
 function getSockets() {
@@ -39,7 +42,6 @@ function connectToPeers(newPeers) {
 	newPeers.forEach((peer) => {
 		const ws = new WebSocket(peer);
 		ws.on("open", () => {
-			console.log(peer);
 			initConnection(ws);
 		});
 		ws.on("error", () => {
@@ -48,12 +50,13 @@ function connectToPeers(newPeers) {
 	});
 }
 
-// Handling message to send to socket
+// Handling messages
 const MessageType = {
 	QUERY_LATEST: 0,
 	QUERY_ALL: 1,
 	RESPONSE_BLOCKCHAIN: 2,
 };
+
 function initMessageHandler(ws) {
 	ws.on("message", (data) => {
 		const message = JSON.parse(data);
@@ -88,9 +91,37 @@ function responseAllChainMsg() {
 	};
 }
 
-
 function handleBlockChainResponse(msg) {
-	return 0;
+	const receiveBlocks = JSON.parse(message.data);
+	const latestReceivedBlock = receiveBlocks[receiveBlocks.length - 1];
+	const lastMyBlock = getLastBlock();
+
+	// 데이터로 받은 블록 중에 마지막 블록의 인덱스가 내가 보유 중인 블록 중인 마지막 블록의 인덱스보다 클 때/작을 때
+	if (latestReceivedBlock.header.index > lastMyBlock.header.index) {
+		// 받은 마지막 블록의 이전 해시값이 내 마지막 블록일 때 : 내 블록의 nextBlock이므로 addBlock 해준다
+		if (
+			createHash(lastMyBlock) === latestReceivedBlock.header.previousBlockHash
+		) {
+			// addBlock이 잘 됐으면
+			if (addBlock(latestReceivedBlock)) {
+				broadcast(responseLastestMsg());
+			} else {
+				console.log("AddBlock falied. Invalid block!");
+			}
+		}
+		// 받은 블럭의 전체 크기가 1일 때
+		else if (receiveBlocks.length === 1) {
+			broadcast(queryAllMsg());
+		}
+		// 내 블록이 제일 긴 블록일 때 : 다른 블록들을 다 바꿔줘야함
+		else {
+			replaceChain(receiveBlocks);
+		}
+	} else {
+		console.log(
+			"Do nothing : lastReceivedBlock.header.index <= lastMyBlock.header.index."
+		);
+	}
 }
 
 function queryAllMsg() {
@@ -107,12 +138,23 @@ function queryLastestMsg() {
 	};
 }
 
+function initErrorHandler() {
+	ws.on("close", () => {
+		closeConnection(ws);
+	});
+	ws.on("error", () => {
+		closeConnection(ws);
+	});
+}
+
+function closeConnection(ws) {
+	console.log(`Connection close ${ws.url}`);	
+	sockets.splice(sockets.indexOf(ws), 1);
+}
+
 module.exports = {
 	connectToPeers,
 	getSockets,
-	initMessageHandler,
-	responseLastestMsg,
-	responseAllChainMsg,
 	queryAllMsg,
 	queryLastestMsg,
 };

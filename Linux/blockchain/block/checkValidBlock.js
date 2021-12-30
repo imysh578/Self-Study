@@ -35,6 +35,7 @@ function isValidNewBlock(newBlock, previousBlock) {
     console.log('Invalid merkleRoot');
     return false;
 	}
+	return true;
 }
 
 function addBlock(newBlock) {

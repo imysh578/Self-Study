@@ -9,30 +9,35 @@ const {
 	Blocks,
 } = require("./chainedBlock.js");
 const { addBlock } = require("./checkValidBlock.js");
-const { connectToPeers, getSockets, queryAllMsg } = require("./p2pServer.js");
+const { connectToPeers, getSockets, initMessageHandler } = require("./p2pServer.js");
 
+// # create env variable HTTP_PORT and init as 3001
+// $ export HTTP_PORT=3001
+// # check if HTTP_PORT is created
+// $ env | grep HTTP
 const http_port = process.env.HTTP_PORT || 3001;
 
-function initHttpServer() {
+// open multi-server
+const port2 = 3002
+
+function initHttpServer(port) {
 	const app = express();
 	app.use(bodyParser.json());
-
+	app.get("/", (req, res) => {
+		res.send(`Welcome to Server ${port}`)
+	})
+	
 	// # add peers on 6002, 6003
 	// $ curl -H "Content-type:application/json" --data "{\"data\" : [ \"ws://localhost:6002\", \"ws://localhost:6003\" ]}" http://localhost:3001/addPeers
-	// $ curl -H "Content-type:application/json" --data '{"data" : ["ws://localhost:6002", "ws://localhost:6003" ]}' http://localhost:3001/addPeers
-	// # display peers 
-	// $ curl -X GET http://localhost:3001/peers  | python3 -m json.tool
-	app.get("/queryAllmsg", (req,res)=>{
-		res.send(queryAllMsg())
-	})
-
+	// $ curl -H "Content-type:application/json" --data '{"data" : ["ws://localhost:6002", "ws://localhost:6003"]}' http://localhost:3001/addPeers
 	app.post("/addPeers", (req, res) => {
 		const data = req.body.data || [];
 		console.log(data);
 		connectToPeers(data);
 		res.send(data);
 	});
-
+	
+	// $ curl -X GET http://localhost:3001/peers  | python3 -m json.tool
 	app.get("/peers", (req, res) => {
 		let socketInfo = []
 		getSockets().forEach((s) => {
@@ -41,16 +46,18 @@ function initHttpServer() {
 		res.send(socketInfo);
 	})
 
+	// $ curl -X GET http://localhost:3001/blocks | python3 -m json.tool
 	app.get("/blocks", (req, res) => {
 		res.send(getBlocks());
 	});
 
+	// $ curl -H "Content-type:application/json" --data '{"data" : ["testBlock1"]}' http://localhost:3001/mineBlock
 	app.post("/mineBlock", (req, res) => {
 		const data = req.body.data || [];
 		const block = nextBlock(data);
 		const test = addBlock(block);
-		console.log(block);
-		console.log(test);
+		console.log(`block: `, block);
+		console.log(`IsValid Block : ${test}`);
 		res.send(getLastBlock());
 	});
 
@@ -63,9 +70,10 @@ function initHttpServer() {
 		process.exit();
 	});
 
-	app.listen(http_port, () => {
-		console.log("Listening HTTP Port : " + http_port);
+	app.listen(port, () => {
+		console.log("Listening HTTP Port : " + port);
 	});
 }
 
-initHttpServer();
+initHttpServer(http_port);
+initHttpServer(port2);
