@@ -41,7 +41,7 @@ const SHA256 = require("crypto-js/sha256");
 console.log("SHA256('a') : ", SHA256("a"));
 console.log("SHA256('a').toString() : ", SHA256("a").toString());
 ```
-![](https://images.velog.io/images/imysh578/post/f3cd3394-a004-4fe2-9e87-55798886bee9/image.png)
+![](https://images.velog.io/images/imysh578/post/f3cd3394-a004-4fe2-9e87-55798886bee9/image.png)  
 `crypto-js`의 `SHA256`함수의 출력값을 보면 우리가 원하는 64자리의 16진수가 안나온다.
 `toString()` 함수를 사용하면 원하는 형태의 해시값이 출력된다.
 
@@ -52,7 +52,7 @@ const testSet = ['a', 'b', 'c', 'd', 'e']
 const testArray = testSet.map((v) => SHA256(v).toString());
 console.log(testArray)
 ```
-![](https://images.velog.io/images/imysh578/post/9e7eeff5-f1c2-4869-9a5b-254982182171/image.png)
+![](https://images.velog.io/images/imysh578/post/9e7eeff5-f1c2-4869-9a5b-254982182171/image.png)  
 <br>
 
 ### 3) 머클 트리 만들기
@@ -72,7 +72,7 @@ console.log("testMerkleTree : ", testMerkleTree);
 const merkleRoot = testMerkleTree.getRoot();
 console.log("merkleRoot : ", merkleRoot);
 ```
-![](https://images.velog.io/images/imysh578/post/c9c010ae-8477-4c9f-8e60-21471516192d/image.png)
+![](https://images.velog.io/images/imysh578/post/c9c010ae-8477-4c9f-8e60-21471516192d/image.png)  
 
 출력된 값을 보면 아래의 정보들이 존재한다.
 - `leaves` : 자식 노드가 없는 최하단 노드들
@@ -94,10 +94,10 @@ console.log('leaf_valid : ', leaf_valid);
 console.log('proof_valid : ', proof_valid);
 console.log('result_valid : ', result_valid);
 ```
-![](https://images.velog.io/images/imysh578/post/b2dc730d-4c86-410d-ad17-08a935bbfcd6/image.png)
+![](https://images.velog.io/images/imysh578/post/b2dc730d-4c86-410d-ad17-08a935bbfcd6/image.png)  
 `proof_valid` 값을 보면 어떤 순서로 어느 값과 비교를 진행했는지 알 수 있다.
 `leaves`가 홀수인 경우엔 아래 그림처럼 진행된다.
-![](https://images.velog.io/images/imysh578/post/3d298c90-22e9-4721-8c2a-2467f7cf5515/image.png)
+![](https://images.velog.io/images/imysh578/post/3d298c90-22e9-4721-8c2a-2467f7cf5515/image.png)  
 자세한 내용은 [Verifiable data structures](https://transparency.dev/verifiable-data-structures/)를 참고하자.
 
 <br>
