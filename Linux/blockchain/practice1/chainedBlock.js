@@ -61,8 +61,6 @@ function createGenesisBlock() {
 	return new Block(header, body);
 }
 
-let Blocks = [createGenesisBlock()];
-
 function getBlocks() {
 	return Blocks;
 }
@@ -103,22 +101,28 @@ function nextBlock(bodyData) {
 	return new Block(header, bodyData)
 }
 
-function addBlock(bodyData) {
-	const newBlock = nextBlock(bodyData);
+function addBlock(newBlock) {
 	Blocks.push(newBlock);
 }
 
 const genesisBlock = createGenesisBlock();
-// console.log(genesisBlock);
+let Blocks = [genesisBlock];
 
-const block1 = nextBlock(["transaction1"])
-// console.log(block1);
+const Block1 = nextBlock(["TX1"]);
+addBlock(Block1);
 
-addBlock(['transaction1'])
-addBlock(['transaction3'])
-addBlock(['transaction4'])
-addBlock(['transaction5'])
-// console.log(Blocks);
+const Block2 = nextBlock(["TX2"]);
+addBlock(Block2);
+
+console.log("Blocks : ", Blocks);
+
+const genesisHash = createHash(genesisBlock);
+const block1Hash = createHash(Block1);
+const block2Hash = createHash(Block2);
+console.log("Genesis Block's Hash: ", genesisHash);
+console.log("Block1's Hash:        ", block1Hash);
+console.log("Block2's Hash:        ", block2Hash);
+
 
 // const testHash = createHash(genesisBlock);
 // console.log(testHash);
