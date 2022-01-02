@@ -95,7 +95,7 @@ function nextBlock(bodyData) {
 	const previousBlockHash = createHash(prevBlock);
 	const timestamp = parseInt(Date.now() / 1000);
 	const tree = merkle("sha256").sync(bodyData);
-	const merkleRoot = tree.root() || "0".repeat();
+	const merkleRoot = tree.root() || "0".repeat(64);
 	const bit = 0;
 	const nonce = 0;
 
@@ -122,7 +122,5 @@ addBlock(['transaction5'])
 
 // const testHash = createHash(genesisBlock);
 // console.log(testHash);
-
-// 과제 : var, let, const 차이
 
 module.exports = {createHash, Blocks, getLastBlock, nextBlock, addBlock, getBlocks, getVersion}

@@ -35,10 +35,10 @@ function createGenesisBlock() {
 	const bit = 0
 	const nonce = 0
 
-	// console.log("version : %s, timestamp : %d, body: %s", version, timestamp, body);
-	// console.log("previousBlockHash : %d", previousBlockHash);
-	// console.log("tree : ", tree)
-	// console.log("merkleRoot : %s", merkleRoot.toString('hex'))
+	console.log("version : %s, timestamp : %d, body: %s", version, timestamp, body);
+	console.log("previousBlockHash : %d", previousBlockHash);
+	console.log("tree : ", tree)
+	console.log("merkleRoot : %s", merkleRoot.toString('hex'))
 
 	const header = new BlockHeader(version, previousBlockHash, timestamp, merkleRoot, bit, nonce)
 	return new Block(header, body)	
