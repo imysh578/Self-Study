@@ -1,0 +1,48 @@
+## 스택 자료구조
+선입후출 LIFO
+하나의 문으로 데이터가 들어오고 나감
+
+stack = []
+
+# 삽입
+stack.append(data)
+
+# 삭제
+stack.pop()
+가장 마지막에 들어온 데이터가 빠져나감
+
+print(stack[::-1]) # 최상단 원소부터 출력
+print(stack) # 최하단 원소부터 출력
+
+## 큐 자료구조
+선입선출 FIFO
+입구 출구가 모두 존재
+
+from collections import deque
+
+# 큐 구현을 위해 deque 라이브러리 사용
+queue.deque()
+
+# 삽입(deque 라이브러리 사용)
+queue.append(data)
+# 삽입(deque 라이브러리 사용 안할때)
+queue.insert(0, data)
+위처럼 insert를 사용해서 구현은 가능하지만, 
+list는 무작위 접근에 최적화된 자료구조이기 때문에 성능적으로 매우 비효율적이다
+따라서 deque를 사용하자!
+
+# 삭제
+queue.popleft()
+가장 먼저 들어온 데이터가 빠져나감
+
+## 재귀함수
+자기 자신을 호출하는 함수 => 무한히 호출 될 수 있음 => 종료 조건을 명시하자
+def recursive_function(i):
+  # 종료 조건: 100번째 재귀함수에서 종료
+  if i == 100:
+    retrun
+  print(i, '번째 재귀함수에서', i+1, '번째 재귀 함수를 호출합니다.')
+  recursive_function(i+1)
+  print(i, '번째 재귀함수를 종료합니다.')
+
+recursive_function(1)

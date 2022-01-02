@@ -1,8 +1,8 @@
 ## Programming Languages
 - [Golang](go)
-- [Javascript](js)
 - [Linux](Linux)
+- [Python](python)
+<!-- - [Javascript](js) -->
 <!-- - [Solidity](solidity) -->
-<!-- - [Python](python) -->
 <!-- - [Rust](Rust) -->
 <!-- - [C++](cpp) -->
