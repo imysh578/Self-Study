@@ -15,7 +15,7 @@
 
 ### How to use 
 - normal
-```
+```go
 import(
   "fmt"
   "math/rand"
@@ -23,7 +23,7 @@ import(
 ```
 
 - if package names overlap
-```
+```go
 import (
   "text/template"
   "html/template"
@@ -31,7 +31,7 @@ import (
 ```
 
 - aliasing of package
-```
+```go
 import(
   "text/template"           // 1
   htemplate "html/template" // 2 aliasing of package
@@ -44,7 +44,7 @@ htemplate.New("foo").Parse(`{{define "T"}}Hello`) // 2
 
 - if package that is not used, put _ in front of it
 > for 
-```
+```go
 import (
   "fmt"
   _ "strings"
@@ -69,7 +69,7 @@ import (
 
 ### Export to other package
 - start with `upper case` : can be used in other packages
-```
+```go
 var Ratio int
 
 const PI = 3.14
@@ -85,7 +85,7 @@ func PrintCustom() {
 ```  
   
 - start with `lower case` : cannot be used in other package
-```
+```go
 var ratio int
 
 const pi = 3.14
