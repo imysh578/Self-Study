@@ -1,11 +1,33 @@
 ## commands
-- mineBlock
-  : ``` curl -H "Content-type:application/json" --data "{\"$key\" : [\"$value\"]}" http://localhost:${port}/mineBlock ```
+- restartServer
+  ```sh
+  kill -9 `ps -ef | grep httpServer.js | grep node | awk '{print $2}'`
+  ```
+
+- addPeers
+  ```sh
+  curl -H "Content-type:application/json" --data '{"data" : ["ws://localhost:6002", "ws://localhost:6003"]}' http://localhost:$port/addPeers
+  ```
+  `-p` port
+  
+- peers
+  ```sh
+  curl -X GET http://localhost:${port}/peers  | python3 -m json.tool
+  ```
+  `-p` port
+
+- mineBlock 
+  ```sh 
+  curl -H "Content-type:application/json" --data "{\"$key\" : [\"$value\"]}" http://localhost:${port}/mineBlock 
+  ```
   `-k` key of data
   `-v` value of value
   `-p` port
+
 - blocks
-  : ``` curl -X GET http://localhost:${port}/blocks | python3 -m json.tool ```
+  ```sh 
+  curl -X GET http://localhost:${port}/blocks | python3 -m json.tool 
+  ```
   `-p` port
 ```
 ./command.sh 
