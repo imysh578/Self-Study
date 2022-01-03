@@ -1,7 +1,12 @@
 // 블록 구조가 유효한지
 // 현재 블록의 인덱스 === 이전 블록의 인덱스 + 1
 // 이전 블록 해시값과 현재 블록의 이전 해시가 같은지
-const {createHash, getLastBlock, nextBlock, Blocks} = require('./chainedBlock.js')
+const {
+	createHash,
+	getLastBlock,
+	nextBlock,
+	Blocks,
+} = require("./chainedBlock.js");
 const merkle = require("merkle");
 
 function isValidBlockStructure(block) {
@@ -29,28 +34,43 @@ function isValidNewBlock(newBlock, previousBlock) {
 		(newBlock.body.length === 0 &&
 			"0".repeat(64) !== newBlock.header.merkleRoot) ||
 		(newBlock.body.length !== 0 &&
-			(merkle("sha256").sync(newBlock.body).root() !==
-				newBlock.header.merkleRoot))
+			merkle("sha256").sync(newBlock.body).root() !==
+				newBlock.header.merkleRoot)
 	) {
-    console.log('Invalid merkleRoot');
-    return false;
+		console.log("Invalid merkleRoot");
+		return false;
+	}
+	return true;
+}
+
+function isValidChain(newBlocks) {
+	if (JSON.stringify(newBlocks[0]) !== JSON.stringify(Blocks[0])){
+		return false
+	}
+	let tempBlocks = [newBlocks[0]]
+	for (let i = 1; i < newBlocks.length; i++) {
+		if (isValidNewBlock(newBlocks[i], newBlocks[i-1])) {
+			tempBlocks.push(newBlocks[i]);
+		} else {
+			return false;
+		}
 	}
 	return true;
 }
 
 function addBlock(newBlock) {
-  if (isValidNewBlock(newBlock, getLastBlock())) {
-    Blocks.push(newBlock);
-    return true;
-  }
-  return false;
+	if (isValidNewBlock(newBlock, getLastBlock())) {
+		Blocks.push(newBlock);
+		return true;
+	}
+	return false;
 }
 
 // const Block = nextBlock(['new Transaction'])
 // addBlock(Block)
-// console.log(Block);
+// console.log(Block);                                                     
 // Blocks.forEach((block) => {
-//   console.log(isValidBlockStructure(block)); 
+//   console.log(isValidBlockStructure(block));
 // })
 
-module.exports = {addBlock, isValidNewBlock, isValidBlockStructure}
+module.exports = { addBlock, isValidNewBlock, isValidBlockStructure, isValidChain };

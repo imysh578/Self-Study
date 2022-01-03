@@ -21,6 +21,11 @@ done
 # Options for Each command
 j=0
 case "$command" in
+  "restartServer")
+    kill -9 `ps -ef | grep httpServer.js | grep node | awk '{print $2}'`
+node httpServer.js &
+    ;;
+    
   "mineBlock") 
     # Set option values
     for option in ${options[@]}

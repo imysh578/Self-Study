@@ -8,7 +8,7 @@ const {
 	getVersion,
 	Blocks,
 } = require("./chainedBlock.js");
-const { addBlock } = require("./checkValidBlock.js");
+const { addBlock, isValidChain, } = require("./checkValidBlock.js");
 const { connectToPeers, getSockets, initMessageHandler } = require("./p2pServer.js");
 
 // # create env variable HTTP_PORT and init as 3001
@@ -54,10 +54,12 @@ function initHttpServer(port) {
 	// $ curl -H "Content-type:application/json" --data '{"data" : ["testBlock1"]}' http://localhost:3001/mineBlock
 	app.post("/mineBlock", (req, res) => {
 		const data = req.body.data || [];
-		const block = nextBlock(data);
-		const test = addBlock(block);
-		console.log(`block: `, block);
-		console.log(`IsValid Block : ${test}`);
+		const newBlock = nextBlock(data);
+		const addBlockSuccess = addBlock(newBlock);
+		console.log(`block: `, newBlock);
+		console.log(`Add Block Success? : ${addBlockSuccess}`);
+		const resutl_isValidChain = isValidChain(Blocks)
+		console.log('Is valid chain? : ', resutl_isValidChain)
 		res.send(getLastBlock());
 	});
 
