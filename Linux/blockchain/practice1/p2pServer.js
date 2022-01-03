@@ -138,7 +138,7 @@ function queryLastestMsg() {
 	};
 }
 
-function initErrorHandler() {
+function initErrorHandler(ws) {
 	ws.on("close", () => {
 		closeConnection(ws);
 	});
