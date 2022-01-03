@@ -1,6 +1,6 @@
 ### How to use if
 - Declaration
-```
+```go
 if condition {
   ...
 } else if condition {
@@ -10,14 +10,14 @@ if condition {
 }
 ```
 
-```
+```go
 if initializer; condition {
   ...
 }
 ```
 
 - example
-```
+```go
 if filename, success := UploadFile(); success {
   fmt.Println("Upload success", filename)
 } else {
