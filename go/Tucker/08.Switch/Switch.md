@@ -2,7 +2,7 @@
 
 ### How to use
 - Declaration
-```
+```go
 switch variable {
 case value1:
   ...
@@ -12,7 +12,7 @@ default:
   ...
 }
 ```
-```
+```go
 switch initializer; variable {
 case value1:
   ...
@@ -25,7 +25,7 @@ default:
 
 
 - example
-```
+```go
 a := 3
 
 switch a {
@@ -39,7 +39,7 @@ default:
   fmt.Println("a!=1,2,3")
 }
 ```
-```
+```go
 ...
 switch age := getMyAge(); age {
 case 10:
@@ -60,7 +60,7 @@ default:
 - Golang doesn't need `break` in switch
 - `break` is default.
 - What if want to continue to next case? Use fallthrough
-```
+```go
 ...
 switch a {
 case 1:
