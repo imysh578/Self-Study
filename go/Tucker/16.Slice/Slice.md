@@ -7,15 +7,15 @@
 - similar to `vector` in c++, `array list` in Java
 
 ### Declaration
-```
+```go
 var slice []int
 ```
-```
+```go
 slice := []int {}
 ```
 
 ### Initialization
-```
+```go
 var slice1 = []int{1,2,3}
 var slice2 = []int{1, 2:2, 4:3} // [1 0 2 0 3]
 ```
@@ -23,13 +23,13 @@ var slice2 = []int{1, 2:2, 4:3} // [1 0 2 0 3]
 
 - Warning
 > using `...` => length cannot be changed => array
-```
+```go
 var array = [...]int{1, 2, 3}
 var slice = []int{1,2,3}
 ```
 
 - Make()
-```
+```go
 var slice = make([]int,3, 5) // [0 0 0], Len: 3, Cap: 5
 ```
 
@@ -40,7 +40,7 @@ var slice = make([]int,3, 5) // [0 0 0], Len: 3, Cap: 5
 - Empty space < length of append : returns new slice 
 - Warning!
   1. Make sure to check it returns from existing slice ro new slice, otherwise several slices shares same data
-```
+```go
 // Empty space > length of append : returns exisiting slice
 slice1 := make([]int, 3, 5)     // Cap - Len = 5 - 3 = 2
 slice2 := append(slice1, 1, 2)  
@@ -58,7 +58,7 @@ fmt.Println(slice4) // [1 2 3 4]
 
 
 ### Structure
-```
+```go
 type SliceHeader struct {
   Data uintptr  // pointing at array
   Len int       // Length of data in array
@@ -71,10 +71,10 @@ type SliceHeader struct {
 - Result of `Slicing` : `slice`
 - It is returned from the existing array not likely Python. 
 - How to use?
-```
+```go
 array[startIndex:endIndex]
 ```
-```
+```go
 arr := [7]int{1,2,3,4,5,6,7}  // [1 2 3 4 5 6 7]
 slice1 := arr[:]              // [1 2 3 4 5 6 7]
 slice2 := arr[1:5]            // [2 3 4 5]
@@ -85,7 +85,7 @@ slice4 := arr[3:]             // [4 5 6 7]
 
 
 - When slicing slice, it depends on index of array, not slice
-```
+```go
 array := [15]int{1: 1, 2: 2, 14: 100}
 slice1 := array[1:10]
 
@@ -95,10 +95,10 @@ fmt.Println(slice2)
 ```
 
 - Cap size Silicing
-```
+```go
 slice[startIndex:endIndex:maxIndex]
 ```
-```
+```go
 slice1 := []int{1, 2, 3, 4, 5}
 slice2 := slice1[1:3:4] // [2, 3], Len: 2, Cap: 4
 ```
