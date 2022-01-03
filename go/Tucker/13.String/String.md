@@ -3,7 +3,7 @@
 : group of character(single text)
 
 ### How to use
-```
+```go
 // using ""
 s1 := "aaaa\nbbbb\ncccc"
 
@@ -23,7 +23,7 @@ ccc`
 
 ### len()
 - Returns length of bytes
-```
+```go
 str := "Hello 월드"
 for i := 0; i < len(str); i++ {
   fmt.Printf("Type : %T, Value : %d, String: %c\n", str[i], str[i], str[i])
@@ -33,7 +33,7 @@ for i := 0; i < len(str); i++ {
 
 ### rune
 : rune is a type of aliasing for int32
-```
+```go
 str := "Hello 월드"
 arr := []rune(str)
 
@@ -43,7 +43,7 @@ for i := 0; i < len(arr); i++ {
 ```
 
 ### range
-```
+```go
 str := "Hello 월드"
 for _, v := range str {
   fmt.Printf("Type : %T, Value : %d, String: %c\n", v, v, v)
@@ -61,7 +61,7 @@ for _, v := range str {
 > compare first char. If first char are same, compare second char, ...
 
 ### Structure of String
-```
+```go
 type StringHeader struct {
   Data uintptr
   Len  int
@@ -72,14 +72,14 @@ type StringHeader struct {
 
 ### Immutability
 - String is Immutable
-```
+```go
 var str string = "Hellow World"
 str = "Good morning" // valid to change whole string
 str[2] = 'a'         // invalid to change part of string
 ```
 
 - examples
-```
+```go
 package main
 
 import (
