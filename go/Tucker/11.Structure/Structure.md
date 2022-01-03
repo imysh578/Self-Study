@@ -5,7 +5,7 @@
 
 ### How to use?
 - Declaration
-```
+```go
 type name struct {
   fieldName1 type
   fieldName2 type
@@ -15,7 +15,7 @@ type name struct {
 ```
 
 - Examples
-```
+```go
 type Student struct{
   Name  string
   Class int
@@ -29,10 +29,10 @@ var a student
 ```
 
 ### Initialization
-```
+```go
 var house House = House {"Seoul", 28, 9.8, "Apt"}
 ```
-```
+```go
 var house House = House {
   "Seoul", 
   28, 
@@ -40,12 +40,12 @@ var house House = House {
   "Apt",
 }
 ```
-```
+```go
 var house House = House {Address: "Seoul", Size 28}
 ```
 
 ### Structure that contains other structure
-```
+```go
 type User struct {
 	Name string
 	ID   string
@@ -60,7 +60,7 @@ type VIPUser struct {
 ```
 
 ### Embedded Structure
-```
+```go
 type User struct {
 	Name string
 	ID   string
@@ -75,7 +75,7 @@ type VIPUser struct {
 ```
 
 ### Copy
-```
+```go
 type Student struct {
   Age   int
   No    int
@@ -89,14 +89,14 @@ student2 = student1 // copy student1 to student2
 ```
 
 ### Size
-```
+```go
 type User struct {
   Age   int       // 8 bytes
   Score float64   // 8 bytes
 }
 // total : 16 bytes
 ```
-```
+```go
 type User struct {
 	Age   int32   // 4 bytes
 	Score float64 // 8 bytes
