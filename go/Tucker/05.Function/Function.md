@@ -3,7 +3,7 @@
 -keyword function_name(param_name param_type) return type {}  
 
 ** Example **  
-```
+```go
 func Add(a int, b int) int {  
   return a+b  
 }
@@ -14,7 +14,7 @@ func Add(a int, b int) int {
 ### Recursive Function
 
 ** Example **  
-```
+```go
 func printNo(n int) {  
 	if n == 0 { // escape condition  
 		return  
@@ -23,6 +23,6 @@ func printNo(n int) {
 	printNo(n - 1)          // recursive call  
 	fmt.Println("After", n) // output after recursive call  
 }  
-```
+```go
 Characteristics  
 Go language uses flexible size stack.  
