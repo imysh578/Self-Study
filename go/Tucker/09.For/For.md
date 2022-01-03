@@ -1,21 +1,21 @@
 ## For
 ### How to use?
 - Declaration
-```
+```go
 for first; condition; after {
   ...
 }
 ```
 
 - examples
-```
+```go
 ...
 for i := 0; i < 10; i++ {
   fmt.Println(i)
 }
 ...
 ```
-```
+```go
 ...
 i := 0
 for ; i < 10; i++ {
@@ -23,7 +23,7 @@ for ; i < 10; i++ {
 }
 ...
 ```
-```
+```go
 ...
 i := 0
 for ; i < 10;  {
@@ -32,7 +32,7 @@ for ; i < 10;  {
 }
 ...
 ```
-```
+```go
 ...
 i := 0
 for i < 10  {
@@ -47,12 +47,12 @@ Golang doesn't have `while`.
 `for` replaces `while`
 
 - examples
-```
+```go
 for true {
   ...
 }
 ```
-```
+```go
 for {
   ...
 }
@@ -66,7 +66,7 @@ skip code after `continue`, and go to `for`'s after treatment.
 escape from `for`
 
 
-```
+```go
 for i := 0; i < 10; i++ {
   if i == 3 {
     continue
@@ -81,7 +81,7 @@ for i := 0; i < 10; i++ {
 
 ### Overlapped `for`
 - examples
-```
+```go
 for i := 0; i < 3; i++ {
   for j := 0; j < 5; j++ {
     fmt.Print("*")
