@@ -29,6 +29,21 @@
   curl -X GET http://localhost:${port}/blocks | python3 -m json.tool 
   ```
   `-p` port
-```
-./command.sh 
+
+- initWallet
+  ```sh 
+  curl -X GET http://localhost:${port}/initWallet
+  ```
+  `-p` port
+
+- address
+  ```sh 
+  curl -X GET http://localhost:${port}/address | python3 -m json.tool 
+  ```
+  `-p` port
+
+
+## How to use?
+```sh
+./command.sh [mainCommand] [option] [value]
 ```

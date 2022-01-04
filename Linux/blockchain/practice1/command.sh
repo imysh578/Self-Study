@@ -108,6 +108,44 @@ node httpServer.js &
     done
     curl -X GET http://localhost:${port}/blocks | python3 -m json.tool
     ;;
+
+    "address") 
+    # Get wallet's address
+    for option in ${options[@]}
+    ## Set option values
+    do
+    case $option in
+    -p) port=${options[$j+1 | bc]}
+      echo "port is $port"
+      ;;
+    --help)
+      echo "usage: [-p port]"
+      exit 1 
+      ;;
+    esac
+    ((j++))
+    done
+    curl -X GET http://localhost:${port}/address | python3 -m json.tool
+    ;;
+
+    "initWallet") 
+    # Init wallet
+    for option in ${options[@]}
+    ## Set option values
+    do
+    case $option in
+    -p) port=${options[$j+1 | bc]}
+      echo "port is $port"
+      ;;
+    --help)
+      echo "usage: [-p port]"
+      exit 1 
+      ;;
+    esac
+    ((j++))
+    done
+    curl -X GET http://localhost:${port}/initWallet
+    ;;
 esac
 
 

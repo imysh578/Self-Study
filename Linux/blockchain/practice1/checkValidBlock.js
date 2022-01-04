@@ -6,6 +6,8 @@ const {
 	getLastBlock,
 	nextBlock,
 	Blocks,
+	isValidTimestamp,
+	hashMatchesDifficulty,
 } = require("./chainedBlock.js");
 const merkle = require("merkle");
 
@@ -14,14 +16,16 @@ function isValidBlockStructure(block) {
 		typeof block.header.version === "string" &&
 		typeof block.header.index === "number" &&
 		typeof block.header.previousBlockHash === "string" &&
-		typeof block.header.timestamp === "number" &&
 		typeof block.header.merkleRoot === "string" &&
+		typeof block.header.timestamp === "number" &&
+		typeof block.header.difficulty === "number" &&
+		typeof block.header.nonce === "number" &&
 		typeof block.body === "object"
 	);
 }
 
 function isValidNewBlock(newBlock, previousBlock) {
-	if (isValidBlockStructure(newBlock) === false) {
+	if (!isValidBlockStructure(newBlock)) {
 		console.log("Invalid Block Structure");
 		return false;
 	} else if (newBlock.header.index !== previousBlock.header.index + 1) {
@@ -38,6 +42,15 @@ function isValidNewBlock(newBlock, previousBlock) {
 				newBlock.header.merkleRoot)
 	) {
 		console.log("Invalid merkleRoot");
+		return false;
+	} 
+	else if (!isValidTimestamp(newBlock, previousBlock)) {
+		console.log("Invalid timestamp");
+		return false;
+	} 
+	else if (!hashMatchesDifficulty(createHash(newBlock), newBlock.header.difficulty)) {
+		console.log(createHash(newBlock), newBlock.header.difficulty);
+		console.log("Invalid difficulty");
 		return false;
 	}
 	return true;
