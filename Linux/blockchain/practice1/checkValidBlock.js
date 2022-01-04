@@ -73,6 +73,10 @@ function isValidChain(newBlocks) {
 
 function addBlock(newBlock) {
 	if (isValidNewBlock(newBlock, getLastBlock())) {
+		console.log("difficulty: ", newBlock.header.difficulty);
+		console.log("previousBlockHash: ", newBlock.header.previousBlockHash);
+		console.log("nonce: ", newBlock.header.nonce);
+		console.log("timestamp: ", newBlock.header.timestamp);
 		Blocks.push(newBlock);
 		return true;
 	}

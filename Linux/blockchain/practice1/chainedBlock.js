@@ -52,7 +52,7 @@ function createGenesisBlock() {
 	];
 	const tree = merkle("sha256").sync(body);
 	const merkleRoot = tree.root() || "0".repeat(64);
-	const difficulty = 0;
+	const difficulty = 1;
 	const nonce = 0;
 
 	const header = new BlockHeader(
@@ -129,7 +129,7 @@ function nextBlock(bodyData) {
 	const timestamp = parseInt(Date.now() / 1000);
 	const tree = merkle("sha256").sync(bodyData);
 	const merkleRoot = tree.root() || "0".repeat(64);
-	const difficulty = 0;
+	const difficulty = getDifficulty(Blocks);
 	// const nonce = 0;
 	// const header = new BlockHeader(version, index, previousBlockHash, merkleRoot, timestamp, difficulty, nonce);
 
@@ -187,7 +187,8 @@ function hexToBinary(s) {
 function hashMatchesDifficulty(hash, difficulty) {
 	const hashBinary = hexToBinary(hash.toUpperCase());
 	const requirePrefix = "0".repeat(difficulty);
-	return hashBinary.startsWith(requirePrefix);
+	// return hashBinary.startsWith(requirePrefix);
+	return hash.startsWith(requirePrefix);
 }
 
 function findBlock(
@@ -237,7 +238,7 @@ function getDifficulty(blocks) {
 	return lastBlock.header.difficulty;
 }
 
-// 01/04
+
 function getAdjustDifficulty(lastBlock, blocks) {
 	const prevAdustmentBlock =
 		blocks[blocks.length - DIFFICULTY_ADJUSTMENT_INTERVAL];
@@ -263,16 +264,11 @@ function getCurrentTimestamp() {
 	return Math.round(Date.now() / 1000); // Math.round() : 소수점 이하 반올림
 }
 
-// 01/04
 function isValidTimestamp(newBlock, prevBlock) {
-	if (newBlock.header.timestamp - prevBlock.header.timestamp < 10) {
-		console.log("new",newBlock.header.timestamp);
-		console.log("prev",prevBlock.header.timestamp);
+	if (newBlock.header.timestamp - prevBlock.header.timestamp < 1) {
 		return false;
 	}
-	if (getCurrentTimestamp() - newBlock.header.timestamp > 10) {
-		console.log("getCurrentTimestamp",getCurrentTimestamp());
-		console.log("new",newBlock.header.timestamp);
+	if (getCurrentTimestamp() - newBlock.header.timestamp < 1) {
 		return false;
 	}
 	return true;

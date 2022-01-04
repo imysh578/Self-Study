@@ -12,12 +12,7 @@ const { addBlock, isValidChain, } = require("./checkValidBlock.js");
 const { connectToPeers, getSockets, initMessageHandler, initP2PServer } = require("./p2pServer.js");
 const { getPublicKeyFromWallet, initWallet } = require("./encryption.js");
 
-// # create env variable HTTP_PORT and init as 3001
-// $ export HTTP_PORT=3001
-// # check if HTTP_PORT is created
-// $ env | grep HTTP
-// set multi-server's port
-const http_port = process.env.HTTP_PORT || 3001;
+const http_port = 3002;
 
 function initHttpServer(port) {
 	const app = express();
@@ -26,9 +21,9 @@ function initHttpServer(port) {
 		res.send(`Welcome to Server ${port}`)
 	})
 	
-	// # add peers on 6002, 6003
-	// $ curl -H "Content-type:application/json" --data "{\"data\" : [ \"ws://localhost:6002\", \"ws://localhost:6003\" ]}" http://localhost:3001/addPeers
-	// $ curl -H "Content-type:application/json" --data '{"data" : ["ws://localhost:6002", "ws://localhost:6003"]}' http://localhost:3001/addPeers
+	// # add peers on 6005, 6006
+	// $ curl -H "Content-type:application/json" --data "{\"data\" : [ \"ws://localhost:6005\", \"ws://localhost:6006\" ]}" http://localhost:3001/addPeers
+	// $ curl -H "Content-type:application/json" --data '{"data" : ["ws://localhost:6005", "ws://localhost:6006"]}' http://localhost:3001/addPeers
 	app.post("/addPeers", (req, res) => {
 		const data = req.body.data || [];
 		console.log(data);
@@ -36,7 +31,7 @@ function initHttpServer(port) {
 		res.send(data);
 	});
 	
-	// $ curl -X GET http://localhost:3001/peers  | python3 -m json.tool
+	// $ curl -X GET http://localhost:3001/peers  |  python3 -m json.tool
 	app.get("/peers", (req, res) => {
 		let socketInfo = []
 		getSockets().forEach((s) => {
@@ -90,9 +85,9 @@ function initHttpServer(port) {
 	app.listen(port, () => {
 		console.log("Listening HTTP Port : " + port);
 	});
-	initP2PServer(6001);
-	initP2PServer(6002);
-	initP2PServer(6003);
+	initP2PServer(6004);
+	initP2PServer(6005);
+	initP2PServer(6006);
 }
 
 initHttpServer(http_port);

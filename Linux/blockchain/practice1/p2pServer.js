@@ -12,9 +12,6 @@ function initP2PServer(test_port) {
 	});
 	console.log("Listening webSocket port : " + test_port);
 }
-initP2PServer(6001);
-initP2PServer(6002);
-initP2PServer(6003);
 
 let sockets = [];
 
@@ -157,4 +154,5 @@ module.exports = {
 	getSockets,
 	queryAllMsg,
 	queryLastestMsg,
+	initP2PServer,
 };
