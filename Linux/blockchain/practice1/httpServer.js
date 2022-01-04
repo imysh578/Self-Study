@@ -5,10 +5,11 @@ const {
 	getLastBlock,
 	getBlocks,
 	nextBlock,
+	addBlock, 
 	getVersion,
 	Blocks,
 } = require("./chainedBlock.js");
-const { addBlock, isValidChain, } = require("./checkValidBlock.js");
+const { isValidChain, } = require("./checkValidBlock.js");
 const { connectToPeers, getSockets, initMessageHandler, initP2PServer } = require("./p2pServer.js");
 const { getPublicKeyFromWallet, initWallet } = require("./encryption.js");
 

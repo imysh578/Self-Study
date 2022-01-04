@@ -3,6 +3,7 @@ const fs = require("fs");
 const merkle = require("merkle");
 const cryptojs = require("crypto-js");
 const { default: random } = require("random");
+const { isValidNewBlock } = require("./checkValidBlock");
 
 // 01/04
 const BLOCK_GENERATION_INTERVAL = 10; // seconds : Block is created every 10 secs
@@ -273,10 +274,22 @@ function isValidTimestamp(newBlock, prevBlock) {
 	}
 	return true;
 }
+function addBlock(newBlock) {
+	if (isValidNewBlock(newBlock, getLastBlock())) {
+		console.log("difficulty: ", newBlock.header.difficulty);
+		console.log("previousBlockHash: ", newBlock.header.previousBlockHash);
+		console.log("nonce: ", newBlock.header.nonce);
+		console.log("timestamp: ", newBlock.header.timestamp);
+		Blocks.push(newBlock);
+		return true;
+	}
+	return false;
+}
 
 module.exports = {
 	createHash,
 	Blocks,
+	addBlock,
 	getLastBlock,
 	nextBlock,
 	getBlocks,
