@@ -1,15 +1,9 @@
 // 블록 구조가 유효한지
 // 현재 블록의 인덱스 === 이전 블록의 인덱스 + 1
 // 이전 블록 해시값과 현재 블록의 이전 해시가 같은지
-const {
-	createHash,
-	getLastBlock,
-	nextBlock,
-	Blocks,
-	isValidTimestamp,
-	hashMatchesDifficulty,
-} = require("./chainedBlock.js");
+
 const merkle = require("merkle");
+const { getLastBlock, createHash, isValidTimestamp, hashMatchesDifficulty, Blocks } = require("./chainedBlock.js");
 
 function isValidBlockStructure(block) {
 	return (
