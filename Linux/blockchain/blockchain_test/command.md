@@ -20,9 +20,9 @@
   ```sh 
   curl -H "Content-type:application/json" --data "{\"$key\" : [\"$value\"]}" http://localhost:${port}/mineBlock 
   ```
-  `-k` key of data
-  `-v` value of value
-  `-p` port
+  `-k` key of data  
+  `-v` value of value  
+  `-p` port  
 
 - blocks
   ```sh 
