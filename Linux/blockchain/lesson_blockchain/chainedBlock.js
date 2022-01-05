@@ -1,10 +1,12 @@
-//chainedBlock.js
+/*******************/
+/* chainedBlock.js */
+/*******************/
+
 const fs = require("fs");
 const merkle = require("merkle");
 const cryptojs = require("crypto-js");
 const { default: random } = require("random");
 
-// 01/04
 const BLOCK_GENERATION_INTERVAL = 10; // seconds : Block is created every 10 secs
 const DIFFICULTY_ADJUSTMENT_INTERVAL = 10; // blocks : Adjust difficulty every 10 blocks created
 
@@ -148,20 +150,6 @@ function nextBlock(bodyData) {
 // 	Blocks.push(newBlock);
 // }
 
-function replaceChain(newBlocks) {
-	if (isValidChain(newBlocks)) {
-		if (
-			newBlocks.length > Blocks.length ||
-			(newBlocks.length === Blocks.length && random.bloolean())
-		) {
-			Blocks = newBlocks;
-			broadcast(responseLastestMasg());
-		}
-	} else {
-		console.log("Error occurred on ledger");
-	}
-}
-
 const genesisBlock = createGenesisBlock();
 let Blocks = [genesisBlock];
 
@@ -185,7 +173,7 @@ function hexToBinary(s) {
 }
 
 function hashMatchesDifficulty(hash, difficulty) {
-	const hashBinary = hexToBinary(hash.toUpperCase());
+	// const hashBinary = hexToBinary(hash.toUpperCase());
 	const requirePrefix = "0".repeat(difficulty);
 	// return hashBinary.startsWith(requirePrefix);
 	return hash.startsWith(requirePrefix);
@@ -226,7 +214,6 @@ function findBlock(
 	}
 }
 
-// 01/04
 function getDifficulty(blocks) {
 	const lastBlock = blocks[blocks.length - 1];
 	if (
@@ -265,10 +252,10 @@ function getCurrentTimestamp() {
 }
 
 function isValidTimestamp(newBlock, prevBlock) {
-	if (newBlock.header.timestamp - prevBlock.header.timestamp < 1) {
+	if (newBlock.header.timestamp - prevBlock.header.timestamp < 10) {
 		return false;
 	}
-	if (getCurrentTimestamp() - newBlock.header.timestamp < 1) {
+	if (getCurrentTimestamp() - newBlock.header.timestamp < 10) {
 		return false;
 	}
 	return true;

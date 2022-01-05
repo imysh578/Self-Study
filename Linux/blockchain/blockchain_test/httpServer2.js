@@ -5,6 +5,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const { getVersion, getBlocks, nextBlock, addBlock, getLastBlock } = require("./chainedBlock");
+const { initP2PServer } = require("./p2pServer");
 
 // set server port
 const http_port = 3002;
@@ -42,6 +43,11 @@ function initHttpServer(port) {
       console.log("Check the error message.");
     }
     res.send(getLastBlock())
+  })
+
+  app.get("/initP2P", (req, res) => {
+    initP2PServer(6002)
+    res.send("Open P2P server")
   })
 
   app.listen(port, (req, res) => {

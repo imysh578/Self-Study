@@ -85,12 +85,16 @@ function initHttpServer(port) {
 		}
 	});
 
+	app.get("/initP2Pserver", (req, res) => {
+		initP2PServer(6004);
+		initP2PServer(6005);
+		initP2PServer(6006);
+		res.send("Initiated P2P servers")
+	})
+
 	app.listen(port, () => {
 		console.log("Listening HTTP Port : " + port);
 	});
-	initP2PServer(6004);
-	initP2PServer(6005);
-	initP2PServer(6006);
 }
 
 initHttpServer(http_port);

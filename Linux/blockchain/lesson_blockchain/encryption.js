@@ -1,3 +1,7 @@
+/*****************/
+/* encryption.js */
+/*****************/
+
 const fs = require("fs");
 // ECDSA(Elliptic Curve Digital Signature Algorithm) : 타원 곡선 디지털 서명 알고리즘
 // 영지식 증명?

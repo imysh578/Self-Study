@@ -5,6 +5,7 @@ command=$1
 
 # Init parameters
 port=3001
+wsPort=6002
 key="data"
 value="empty"
 
@@ -33,8 +34,11 @@ node httpServer.js &
     ## Set option values
     do
     case $option in
-    -p) port=${options[$j+1 | bc]}
+    -p) http port=${options[$j+1 | bc]}
       echo "port is $port"
+      ;;
+    -w) websocket server port=${options[$j+1 | bc]}
+      echo "websocket Port is $wsPort"
       ;;
     --help)
       echo "usage: [-p port]"
@@ -43,7 +47,7 @@ node httpServer.js &
     esac
     ((j++))
     done
-    curl -H "Content-type:application/json" --data '{"data" : ["ws://localhost:6002", "ws://localhost:6003"]}' http://localhost:$port/addPeers
+    curl -H "Content-type:application/json" --data "{\"data\" : [\"ws://localhost:${wsPort}\"]}" http://localhost:$port/addPeers
     ;;
 
   "peers")
@@ -126,6 +130,25 @@ node httpServer.js &
     ((j++))
     done
     curl -X GET http://localhost:${port}/address | python3 -m json.tool
+    ;;
+
+    "initP2P") 
+    # Init P2P server
+    for option in ${options[@]}
+    ## Set option values
+    do
+    case $option in
+    -p) port=${options[$j+1 | bc]}
+      echo "port is $port"
+      ;;
+    --help)
+      echo "usage: [-p port]"
+      exit 1 
+      ;;
+    esac
+    ((j++))
+    done
+    curl -X GET http://localhost:${port}/initP2P
     ;;
 
     "initWallet") 

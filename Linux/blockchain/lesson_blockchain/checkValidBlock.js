@@ -1,6 +1,6 @@
-// 블록 구조가 유효한지
-// 현재 블록의 인덱스 === 이전 블록의 인덱스 + 1
-// 이전 블록 해시값과 현재 블록의 이전 해시가 같은지
+/**********************/
+/* checkValidBlock.js */
+/**********************/
 
 const merkle = require("merkle");
 const { getLastBlock, createHash, isValidTimestamp, hashMatchesDifficulty, Blocks } = require("./chainedBlock.js");
@@ -19,6 +19,14 @@ function isValidBlockStructure(block) {
 }
 
 function isValidNewBlock(newBlock, previousBlock) {
+	/**
+	 * 1. check if valid block structure
+	 * 2. check if valid index
+	 * 3. check if valid hash
+	 * 4. check if valid merkleRoot
+	 * 5. check if valid timestamp
+	 * 6. check if valid difficulty
+	 */
 	if (!isValidBlockStructure(newBlock)) {
 		console.log("Invalid Block Structure");
 		return false;
@@ -77,6 +85,20 @@ function addBlock(newBlock) {
 	return false;
 }
 
+function replaceChain(newBlocks) {
+	if (isValidChain(newBlocks)) {
+		if (
+			newBlocks.length > Blocks.length ||
+			(newBlocks.length === Blocks.length && random.bloolean())
+		) {
+			Blocks = newBlocks;
+			broadcast(responseLastestMasg());
+		}
+	} else {
+		console.log("Error occurred on ledger");
+	}
+}
+
 // const Block = nextBlock(['new Transaction'])
 // addBlock(Block)
 // console.log(Block);                                                     
@@ -84,4 +106,4 @@ function addBlock(newBlock) {
 //   console.log(isValidBlockStructure(block));
 // })
 
-module.exports = { addBlock, isValidNewBlock, isValidBlockStructure, isValidChain };
+module.exports = { addBlock, isValidNewBlock, isValidBlockStructure };
