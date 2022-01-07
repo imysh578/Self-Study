@@ -325,4 +325,4 @@ let Blocks = [genesisBlock];
 // 	console.log(Blocks);
 // }, 10000);
 
-module.exports = {getVersion, getBlocks, nextBlock, addBlock, getLastBlock}
+module.exports = {getVersion, getBlocks, nextBlock, addBlock, getLastBlock, createHash}

@@ -63,7 +63,7 @@ function initMessageHandler(ws) {
 
 		switch (message.type) {
 			case MessageType.QUERY_LATEST:
-				write(ws, responseLastestMsg());
+				write(ws, responseLatestMsg());
 				break;
 			case MessageType.QUERY_ALL:
 				write(ws, responseAllChainMsg());
@@ -77,7 +77,7 @@ function initMessageHandler(ws) {
 	});
 }
 
-function responseLastestMsg() {
+function responseLatestMsg() {
 	return {
 		type: RESPONSE_BLOCKCHAIN,
 		data: JSON.stringify([getLastBlock()]),
@@ -91,7 +91,7 @@ function responseAllChainMsg() {
 	};
 }
 
-function handleBlockChainResponse(msg) {
+function handleBlockChainResponse(message) {
 	const receiveBlocks = JSON.parse(message.data);
 	const latestReceivedBlock = receiveBlocks[receiveBlocks.length - 1];
 	const lastMyBlock = getLastBlock();
@@ -104,7 +104,7 @@ function handleBlockChainResponse(msg) {
 		) {
 			// addBlock이 잘 됐으면
 			if (addBlock(latestReceivedBlock)) {
-				broadcast(responseLastestMsg());
+				broadcast(responseLatestMsg());
 			} else {
 				console.log("AddBlock falied. Invalid block!");
 			}
@@ -131,7 +131,7 @@ function queryAllMsg() {
 	};
 }
 
-function queryLastestMsg() {
+function queryLatestMsg() {
 	return {
 		type: QUERY_LATEST,
 		data: null,
@@ -156,6 +156,6 @@ module.exports = {
 	connectToPeers,
 	getSockets,
 	queryAllMsg,
-	queryLastestMsg,
+	queryLatestMsg,
 	initP2PServer,
 };
