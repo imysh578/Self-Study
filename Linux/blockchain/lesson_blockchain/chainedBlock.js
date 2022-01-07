@@ -5,7 +5,7 @@
 const fs = require("fs");
 const merkle = require("merkle");
 const cryptojs = require("crypto-js");
-const { default: random } = require("random");
+const { random } = require("random");
 
 const BLOCK_GENERATION_INTERVAL = 10; // seconds : Block is created every 10 secs
 const DIFFICULTY_ADJUSTMENT_INTERVAL = 10; // blocks : Adjust difficulty every 10 blocks created
