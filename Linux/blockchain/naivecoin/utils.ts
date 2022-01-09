@@ -1,14 +1,20 @@
+// import modules
+import fs from "fs";
+import merkle from "merkle";
+
+// import functions from other files
 import { Block, BlockHeader } from "./blockStructure";
 import * as encryptions from "./encryptions";
-import fs = require("fs");
+import * as validations from "./validataions"
 
-function getVersion() {
+function getVersion():string {
 	const packagejson = fs.readFileSync("package.json", "utf8");
 	const version: string = JSON.parse(packagejson).version;
 	return version;
 }
 
-function getSizeOf(data: any) {
+// get memory size of each types
+function memorySizeOf(data: any):number {
 	let objectList: object[] = [];
 	let stack: any[] = [data];
 	let bytes: number = 0;
@@ -31,13 +37,22 @@ function getSizeOf(data: any) {
 	return bytes;
 }
 
-function createGenesisBlock() {
-	const magicNumber: string = "D9B4BEF9";
+// Create genesisBlock
+function createGenesisBlock():Block {
+	/**
+	 * Magic Number: identifier for the Blockchain network
+	 *    - 0xD9B4BEF9 : bitcoin
+	 */
+	const magicNumber: string = "D9B4BEF9"; 
 	let blockSize: number = 0;
+	const txCounter: number = 1;
+	const txLists: object[] = [{data: "this is Genesis Block"}];
 
+	// header properties
 	const version: string = getVersion();
 	const index: number = 0;
 	const prevHash: string = "0".repeat(64);
+	const merkleRoot: string = merkle("sha256").sync(txLists).root() || "0".repeat(64);
 	const timestamp: number = Date.UTC(1991, 10, 30);
 	const difficulty: number = 1;
 	const nonce: number = 0;
@@ -45,20 +60,13 @@ function createGenesisBlock() {
 		version,
 		index,
 		prevHash,
+		merkleRoot,
 		timestamp,
 		difficulty,
 		nonce
 	);
 
-	const txCounter: number = 1;
-	const txLists: object[] = [{data: "this is Genesis Block"}];
-	const hash: string = encryptions.getSHA256Of(header);
-	// const blocksize: number =
-	// 	getSizeOf(header) +
-	// 	getSizeOf(magicNumber) +
-	// 	getSizeOf(txCounter) +
-	// 	getSizeOf(txLists) +
-	// 	getSizeOf(hash);
+	const hash: string = encryptions.calculateHashOfBlock(header);
 
 	const genesisBlock = new Block(
 		magicNumber,
@@ -68,24 +76,30 @@ function createGenesisBlock() {
 		txLists,
 		hash
 	);
-	genesisBlock.blockSize = getSizeOf(genesisBlock)
+
+	// get size of Block and put into `blockSize` 
+	genesisBlock.blockSize = memorySizeOf(genesisBlock)
 
 	return genesisBlock;
 }
 
-function getLastBlock() {
-	return blockChain.slice(-1)[0];
-}
+// function getLastBlock():Block {
+// 	return Block.blockchain.slice(-1)[0];
+// }
 
 const createNextBlock = (txLists: object[]) => {
-	const prevBlock: Block = getLastBlock();
+	const prevBlock: Block = Block.lastBlock();
 
 	const magicNumber = genesisBlock.magicNumber;
 	let nextBlockSize: number = 0;
+	const nextTxCounter: number = Object.keys(txLists[0]).length;
+	const nextTxLists: object[] = txLists;
 
+	// header properties
 	const version: string = getVersion();
 	const nextIndex: number = prevBlock.header.index + 1;
 	const prevHash: string = prevBlock.hash;
+	const merkleRoot: string = merkle("sha256").sync(nextTxLists).root();
 	const nextTimestamp: number = Math.round(Date.now() / 1000);
 	const nextDifficulty: number = 1;
 	const nextNonce: number = 0;
@@ -93,23 +107,16 @@ const createNextBlock = (txLists: object[]) => {
 		version,
 		nextIndex,
 		prevHash,
+		merkleRoot,
 		nextTimestamp,
 		nextDifficulty,
 		nextNonce
 	);
 
-	const nextTxCounter: number = Object.keys(txLists[0]).length;
-	const nextTxLists: object[] = txLists;
-	const nextHash = calculateHash(nextHeader);
+	// next block's hash
+	const nextHash = encryptions.calculateHashOfBlock(nextHeader);
 
-	// const nextBlockSize =
-	// 	getSizeOf(magicNumber) +
-	// 	getSizeOf(nextHeader) +
-	// 	getSizeOf(nextTxCounter) +
-	// 	getSizeOf(nextTxLists) +
-	// 	getSizeOf(nextHash);
-
-	const newBlock: Block = new Block(
+	const nextBlock: Block = new Block(
 		magicNumber,
 		nextBlockSize,
 		nextHeader,
@@ -117,23 +124,39 @@ const createNextBlock = (txLists: object[]) => {
 		nextTxLists,
 		nextHash
 	);
-	newBlock.blockSize = getSizeOf(newBlock)
 
-	return newBlock;
+	// get block size of newBock
+	nextBlock.blockSize = memorySizeOf(nextBlock)
+
+	return nextBlock;
 };
 
-const genesisBlock: Block = createGenesisBlock();
-const blockChain: Block[] = [genesisBlock];
+function replaceChain (newBlocks: Block[]) {
+	if (validations.isValidBlockchain(newBlocks) && newBlocks.length > Block.blockchain.length) {
+		console.log("Received blockchain is valid! Replace current blockchain with received one");
+		Block.blockchain = newBlocks;
+		// broadcastLatest();
+	} else {
+		console.log("Received blockchain invalid");
+	}
+}
 
-console.log("Genesis Block : ", genesisBlock);
-console.log("Last Block : ", getLastBlock());
-const block1: Block = createNextBlock([
+// Create genesis Block and push it into blockchain
+const genesisBlock = createGenesisBlock();
+Block.blockchain.push(genesisBlock);
+
+const block1: Block = Block.nextBlock([
 	{
 		tx1: { amount: 100, from: "Dr.Octavisu", to: "Peter" },
 		tx2: { amount: 50, from: "Peter", to: "Goblin" },
 	},
 ]);
-console.log(block1);
-console.log(getSizeOf(block1.txLists));
+Block.addBlock(block1)
+// console.log(Block.lastBlock());
 
-export { getVersion, getLastBlock };
+
+// console.log("Genesis Block : ", genesisBlock);
+// console.log("block1 : ", block1);
+// console.log("Last Block : ", getLastBlock());
+
+export { getVersion, createGenesisBlock, createNextBlock, genesisBlock };
