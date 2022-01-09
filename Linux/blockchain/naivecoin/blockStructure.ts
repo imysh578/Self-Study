@@ -1,40 +1,34 @@
-import { brotliDecompressSync } from "zlib";
-import {getVersion} from "./utils"
+import { getVersion } from "./utils";
 
 class Block {
-	public header: object;
-	public body: object;
-	public hash: string;
-	constructor(header: object, body: object, hash: string) {
-		this.header = header;
-		this.body = body;
-		this.hash = hash;
-	}
-}
-
-class BlockBody {
 	public magicNumber: string;
 	public blockSize: number;
-	public txCount: number;
-	public txLists: string[];
 
+	public header: BlockHeader;
+
+	public txCounter: number;
+	public txLists: object[];
+	public hash: string;
 	constructor(
 		magicNumber: string,
 		blockSize: number,
-		txCount: number,
-		txLists: string[],
+		header: BlockHeader,
+		txCounter: number,
+		txLists: object[],
+		hash: string
 	) {
-    this.magicNumber = magicNumber;
-    this.blockSize = blockSize;
-    this.txCount = txCount;
-    this.txLists = txLists;
-  }
+		this.header = header;
+		this.magicNumber = magicNumber;
+		this.blockSize = blockSize;
+		this.txCounter = txCounter;
+		this.txLists = txLists;
+		this.hash = hash;
+	}
 }
 
 class BlockHeader {
 	public version: string;
 	public index: number;
-	
 	public prevHash: string;
 	public timestamp: number;
 	public difficulty: number;
@@ -43,7 +37,7 @@ class BlockHeader {
 	constructor(
 		version: string,
 		index: number,
-		
+
 		prevHash: string,
 		timestamp: number,
 		difficulty: number,
@@ -58,6 +52,4 @@ class BlockHeader {
 	}
 }
 
-
-
-export {Block, BlockBody, BlockHeader}
+export { Block,  BlockHeader };

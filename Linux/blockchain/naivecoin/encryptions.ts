@@ -1,7 +1,7 @@
-import {Block, BlockBody, BlockHeader} from "./blockStructure"
+import {Block, BlockHeader} from "./blockStructure"
 import * as cryptojs from "crypto-js"
 
-function calculateHash (header: BlockHeader) {
+function getSHA256Of (header: BlockHeader) {
   if (typeof header === "object") {
     const blcokString: string =
 			header.version +
@@ -19,4 +19,4 @@ function calculateHash (header: BlockHeader) {
   }
 }
 
-export {calculateHash}
+export {getSHA256Of}
