@@ -62,6 +62,8 @@ const signTxIn = (transaction: Transaction, txInIndex: number, privateKey: strin
   return signature;
 }
 
+// Everytime new block is added, update transaction output lists
+// Retrieve all new unspent transaction outputs from the new block
 const newUnspentTxOuts: UnspentTxOut[] = newTransactions.map((t) => {
   return t.txOuts
 		.map(
@@ -71,9 +73,9 @@ const newUnspentTxOuts: UnspentTxOut[] = newTransactions.map((t) => {
 		.reduce((a, b) => a.concat(b), []);
 })
 
+// Find which transaction outputs are consumed by new transactions of the block
 const consumedTxOuts: UnspentTxOut[] = newTransactions
 	.map((t) => t.txIns)
 	.reduce((a, b) => a.concat(b), [])
 	.map((txIn) => new UnspentTxOut(txIn.txOutId, txIn.txOutIndex, "", 0));
 
-  
