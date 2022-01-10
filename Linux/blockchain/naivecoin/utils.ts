@@ -5,6 +5,7 @@ import merkle from "merkle";
 // import functions from other files
 import { Block, BlockHeader } from "./blockStructure";
 import * as encryptions from "./encryptions";
+import { findBlock, getDifficulty } from "./pow";
 import * as validations from "./validataions"
 
 function getVersion():string {
@@ -53,7 +54,7 @@ function createGenesisBlock():Block {
 	const index: number = 0;
 	const prevHash: string = "0".repeat(64);
 	const merkleRoot: string = merkle("sha256").sync(txLists).root() || "0".repeat(64);
-	const timestamp: number = Date.UTC(1991, 10, 30);
+	const timestamp: number = 1131006505;
 	const difficulty: number = 1;
 	const nonce: number = 0;
 	const header = new BlockHeader(
@@ -83,12 +84,12 @@ function createGenesisBlock():Block {
 	return genesisBlock;
 }
 
-// function getLastBlock():Block {
-// 	return Block.blockchain.slice(-1)[0];
-// }
+function getLastBlock():Block {
+	return Block.blockchain.slice(-1)[0];
+}
 
 const createNextBlock = (txLists: object[]) => {
-	const prevBlock: Block = Block.lastBlock();
+	const prevBlock: Block = getLastBlock();
 
 	const magicNumber = genesisBlock.magicNumber;
 	let nextBlockSize: number = 0;
@@ -100,8 +101,8 @@ const createNextBlock = (txLists: object[]) => {
 	const nextIndex: number = prevBlock.header.index + 1;
 	const prevHash: string = prevBlock.hash;
 	const merkleRoot: string = merkle("sha256").sync(nextTxLists).root();
-	const nextTimestamp: number = Math.round(Date.now() / 1000);
-	const nextDifficulty: number = 1;
+	const nextTimestamp: number = getCurrentTimestamp();
+	const nextDifficulty: number = getDifficulty(Block.blockchain);
 	const nextNonce: number = 0;
 	const nextHeader: BlockHeader = new BlockHeader(
 		version,
@@ -116,20 +117,31 @@ const createNextBlock = (txLists: object[]) => {
 	// next block's hash
 	const nextHash = encryptions.calculateHashOfBlock(nextHeader);
 
-	const nextBlock: Block = new Block(
+	const nextBlock: Block = findBlock(new Block(
 		magicNumber,
 		nextBlockSize,
 		nextHeader,
 		nextTxCounter,
 		nextTxLists,
 		nextHash
-	);
+	));
 
 	// get block size of newBock
 	nextBlock.blockSize = memorySizeOf(nextBlock)
 
 	return nextBlock;
 };
+
+// add new block
+function addBlock(newBlock: Block) {
+	if (validations.isValidNewBlock(newBlock, Block.lastBlock())) {
+		Block.blockchain.push(newBlock);
+		console.log("Block added successfully!");
+		return true;
+	}
+	console.log("Adding block failed");
+	return false;
+}
 
 function replaceChain (newBlocks: Block[]) {
 	if (validations.isValidBlockchain(newBlocks) && newBlocks.length > Block.blockchain.length) {
@@ -141,17 +153,17 @@ function replaceChain (newBlocks: Block[]) {
 	}
 }
 
+const getCurrentTimestamp = ():number => Math.round(Date.now()/1000);
+
 // Create genesis Block and push it into blockchain
 const genesisBlock = createGenesisBlock();
 Block.blockchain.push(genesisBlock);
 
-const block1: Block = Block.nextBlock([
-	{
-		tx1: { amount: 100, from: "Dr.Octavisu", to: "Peter" },
-		tx2: { amount: 50, from: "Peter", to: "Goblin" },
-	},
-]);
-Block.addBlock(block1)
+// const block1: Block = createNextBlock([
+// 		{ amount: 100, from: "Dr.Octavisu", to: "Peter" },
+// 		{ amount: 50, from: "Peter", to: "Goblin" }
+// ]);
+// addBlock(block1)
 // console.log(Block.lastBlock());
 
 
@@ -159,4 +171,4 @@ Block.addBlock(block1)
 // console.log("block1 : ", block1);
 // console.log("Last Block : ", getLastBlock());
 
-export { getVersion, createGenesisBlock, createNextBlock, genesisBlock };
+export { getVersion, createGenesisBlock, createNextBlock, addBlock, replaceChain, genesisBlock };

@@ -1,6 +1,3 @@
-import { createGenesisBlock, createNextBlock, } from "./utils";
-import { isValidNewBlock } from "./validataions";
-
 class Block {
 	public magicNumber: string;
 	public blockSize: number;
@@ -25,28 +22,12 @@ class Block {
 		this.hash = hash;
 	}
 
-	static getGenesisBlock(): Block {
-		return createGenesisBlock();
-	}
-
 	// create blockchain
 	static blockchain: Block[] = [];
 
 	// get last block
 	static lastBlock = () => {
 		return this.blockchain.slice(-1)[0];
-	}
-
-	// get next block
-	static nextBlock = (txLists: object[]) => {
-		return createNextBlock(txLists)
-	}
-
-	// add new block
-	static addBlock(newBlock: Block) {
-		if (isValidNewBlock(newBlock, Block.lastBlock())) {
-			this.blockchain.push(newBlock);
-		}
 	}
 }
 

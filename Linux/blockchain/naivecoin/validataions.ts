@@ -67,7 +67,7 @@ function isValidNewBlock(newBlock: Block, prevBlock: Block) {
 		return false;
 	} 
 	// 6. Validate timestamp
-	else if (!isValidTimestamp) {
+	else if (!isValidTimestamp(newBlock, prevBlock)) {
 		console.log("Invalid newBlock's timestamp");
 		return false;
 	}
@@ -94,13 +94,13 @@ function isValidBlockchain(blockchain: Block[]) {
 	}
 }
 
+
 function isValidTimestamp(block: Block, prevBlock: Block) {
-	// if block creation time gap is smaller than 10 sec, it is invalid block
-	const currentTime = Math.round(Date.now()/1000);
-	return (
-		block.header.timestamp - prevBlock.header.timestamp < 10 &&
-		currentTime - block.header.timestamp < 10
-	);
+	// if block creation time gap is smaller than 5 sec, it is invalid block
+	if (block.header.timestamp - prevBlock.header.timestamp < 5) {
+		return false
+	}
+	return true
 }
 
 

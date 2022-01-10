@@ -8,12 +8,8 @@ import {
 } from "./utils";
 import { connectToPeers, getSockets, initP2PServer } from "./p2pServer";
 
-const httpPort: number = process.env.HTTP_PORT
-	? parseInt(process.env.HTTP_PORT)
-	: 3001;
-const p2pPort: number = process.env.P2P_PORT
-	? parseInt(process.env.P2P_PORT)
-	: 6001;
+const httpPort: number = 3002;
+const p2pPort: number = 6002;
 
 const initHttpServer = (myHttpPort: number) => {
 	const app = express();
@@ -40,9 +36,9 @@ const initHttpServer = (myHttpPort: number) => {
 	app.post("/mineBlock", (req, res) => {
 		const data = req.body.data || [];
 		const newBlock: Block = createNextBlock(data);
+		addBlock(newBlock);
 		console.log("difficulty: ", newBlock.header.difficulty);
 		console.log("nonce: ", newBlock.header.nonce);
-		addBlock(newBlock);
 		res.send(newBlock);
 	});
 	
@@ -51,7 +47,7 @@ const initHttpServer = (myHttpPort: number) => {
 		res.send(getSockets().map((s:any) => s._socket.remoteAddress + ":" + s._socket.remotePort))
 	})
 	
-	// $ curl -H "Content-type:application/json" --data '{"data" : ["ws://localhost:6002"]}' http://localhost:3001/addPeers
+	// $ curl -H "Content-type:application/json" --data '{"data" : ["ws://localhost:6001"]}' http://localhost:3001/addPeers
 	app.post("/addPeers", (req, res) => {
 		const data = req.body.data || [];
 		connectToPeers(data);
