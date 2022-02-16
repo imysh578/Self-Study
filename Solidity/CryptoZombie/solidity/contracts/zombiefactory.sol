@@ -1,16 +1,21 @@
 pragma solidity >=0.5.0 <0.6.0;
 
-contract ZombieFactory {
+import "./ownable.sol";
+
+contract ZombieFactory is Ownable {
   
   event NewZombie(uint id, string name, uint dna); // 새로운 좀비가 생성됐을 때의 이벤트 정의
 
   uint dnaDigits = 16;  // DNA는 16자리 수
   uint dnaModulus = 10 ** dnaDigits;  // 16자리 수보다 많은 경우, 16자리 수보다 큰 수는 제외할 때 사용
-  
+  uint cooldownTime = 1 days;
+
   // Zombie : name, dnan 값을 가짐
   struct Zombie {
     string name;
     uint dna;
+    uint32 level;     // 좀비의 레벨 추가
+    uint32 readyTime; // 공격 대기 시간(쿨타임) 추가
   }
   
   // zombies : Zombie로 이루어진 배열
@@ -23,7 +28,7 @@ contract ZombieFactory {
 
   // 좀비의 name과 dna를 이용해서 좀비 생성하는 함수
   function _createZombie(string memory _name, uint _dna) internal {
-    uint id = zombies.push(Zombie(_name, _dna)); // 생성한 좀비는 zombis 배열에 추가, 배열의 인덱스 : 좀비의 id
+    uint id = zombies.push(Zombie(_name, _dna, 1, uint32(now + cooldownTime))) - 1; // 생성한 좀비는 zombis 배열에 추가, 배열의 인덱스 : 좀비의 id
     zombieToOwner[id] = msg.sender;   // 생성된 좀비와 현재 사용자를 매핑함
     ownerZombieCount[msg.sender]++;   // 현재 사용자의 좀비 보유 수를 1 증가 시킴
     emit NewZombie(id, _name, _dna);  // 새로운 좀비가 생성됐다는 이벤트 발생
