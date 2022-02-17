@@ -46,6 +46,7 @@ contract ZombieFactory is Ownable {
   function createRandomZombie(string memory _name) public {
     require(ownerZombieCount[msg.sender] == 0);
     uint randDna = _generateRandomDna(_name);
+    randDna = randDna - randDna % 100;           // 맨마지막 두자리는 species를 의미함, 일반 좀비는 00 
     _createZombie(_name, randDna);
   } 
 } 
