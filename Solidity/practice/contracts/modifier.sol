@@ -15,7 +15,7 @@ contract FunctionModifier {
     _;
   }
 
-  function addUser (address _userAddress) public onlyOwner returns(address[])  {  // 제어자 적용 위치 확인
+  function addUser (address _userAddress) public onlyOwner returns(address[])  {  // 제어자 적용 위치
     users.push(_userAddress);
     return users;
   }

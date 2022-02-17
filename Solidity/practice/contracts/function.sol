@@ -160,8 +160,6 @@ contract MultipleVariables {
   function multipleVariables (uint _x) public pure returns (uint _a, uint _b, bool _ok) {
     _a = _x * 2;
     _b = _x ** 3;
-
-    _ok = (_a*_b) < 10000;
-
+    _ok == (_a*_b) < 10000;
   }
 }
