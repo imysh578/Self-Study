@@ -10,7 +10,7 @@ contract Gacha is Owner {
   }
 
   struct User {
-    Item itemOwned;
+    Item[] itemsOwned;
     uint8 attempts;
   }
 
@@ -21,12 +21,22 @@ contract Gacha is Owner {
   uint randNonce = 0;
   uint attemptsLimit = 5;
   uint bonusAttemps = 1;
-  uint winningProbability = 50;
+  uint winningProbability = 20;
+
+  event gachaSuccessEvent(address indexed account, uint itemId, uint8 attempts);
 
   constructor() {
     for (uint8 i = 0; i < 10; i++) {
       itemList.push(Item(i, false));
     }
+  }
+
+  function setGetItemFee(uint _newGameFee) external isOwner {
+    getItemFee = _newGameFee * (1 ether);
+  }
+
+  function setAttemptsLimit (uint _newAttemptsLimit) external isOwner {
+    attemptsLimit = _newAttemptsLimit;
   }
 
   function getRandomNum (uint _range) internal returns (uint){
@@ -41,23 +51,23 @@ contract Gacha is Owner {
     _;
   }
 
-  function getRandomItem () external payable checkAttempts returns (Item memory){
+  function getRandomItem () external payable checkAttempts returns (bool){
     User storage user = users[msg.sender]; 
     require(msg.value == getItemFee, "You should pay correct amount of Eth. Check the value you sent.");
+    user.attempts++;
     uint randomProbability = getRandomNum(100);
-    if (randomProbability > 50) {
+    if (randomProbability <= winningProbability) {
       uint randomItemNum = getRandomNum(10);
-      user.attempts++;
-      user.itemOwned = itemList[randomItemNum];
-      return user.itemOwned;
+      user.itemsOwned.push(itemList[randomItemNum]);
+      emit gachaSuccessEvent(msg.sender, randomItemNum, user.attempts);
+      return true;
+    } else {
+      return false;
     }
   }
 
-  function setGetItemFee(uint _newGameFee) external isOwner {
-    getItemFee = _newGameFee * (1 ether);
+  function getUserItems (address _account) external view returns (Item[] memory) {
+    return users[_account].itemsOwned;
   }
 
-  function setAttemptsLimit (uint _newAttemptsLimit) external isOwner {
-    attemptsLimit = _newAttemptsLimit;
-  }
 }
