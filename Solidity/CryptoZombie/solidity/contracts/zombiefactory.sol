@@ -1,9 +1,13 @@
 pragma solidity >=0.5.0 <0.6.0; // compiler 0.5.x
 
 import "./ownable.sol";
+import "./safemath.sol";
 
 contract ZombieFactory is Ownable { // ZombieFactory가 Ownable를 상속함 
-  
+  using SafeMath for uint256;
+  using SafeMath32 for uint32;
+  using SafeMath16 for uint16;
+
   event NewZombie(uint zombieId, string name, uint dna); // 새로운 좀비가 생성됐을 때의 이벤트 정의
 
   uint dnaDigits = 16;                // DNA는 16자리 수
@@ -16,6 +20,8 @@ contract ZombieFactory is Ownable { // ZombieFactory가 Ownable를 상속함
     uint dna;
     uint32 level;
     uint32 readyTime;   // 공격 이후 다음 공격까지 기다리는 시간
+    uint16 winCount;
+    uint16 lossCount;
   }
   
   // zombies : Zombie로 이루어진 배열
@@ -28,9 +34,9 @@ contract ZombieFactory is Ownable { // ZombieFactory가 Ownable를 상속함
 
   // 좀비의 name과 dna를 이용해서 좀비 생성하는 함수
   function _createZombie(string memory _name, uint _dna) internal {
-    uint id = zombies.push(Zombie(_name, _dna, 1, uint32(now + cooldownTime))) - 1;
+    uint id = zombies.push(Zombie(_name, _dna, 1, uint32(now + cooldownTime),0 ,0)) - 1;
     zombieToOwner[id] = msg.sender;   // 생성된 좀비와 현재 사용자를 매핑함
-    ownerZombieCount[msg.sender]++;   // 현재 사용자의 좀비 보유 수를 1 증가 시킴
+    ownerZombieCount[msg.sender] = ownerZombieCount[msg.sender].add(1);   // 현재 사용자의 좀비 보유 수를 1 증가 시킴
     emit NewZombie(id, _name, _dna);  // 새로운 좀비가 생성됐다는 이벤트 발생
   }
   

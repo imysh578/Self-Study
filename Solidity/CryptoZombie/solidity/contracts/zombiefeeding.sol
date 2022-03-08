@@ -21,6 +21,12 @@ contract KittyInterface {
 contract ZombieFeeding is ZombieFactory {
   KittyInterface kittyContract; 
 
+  // 좀비 소유자 확인
+  modifier onlyOwnerOf(uint _zombieId) {
+    require(msg.sender == zombieToOwner[_zombieId]);
+    _;
+  }
+
   // cryptoKitty 컨트랙트 주소가 바뀔 수도 있기 때문에 이를 임의로 바꿀 수 있는 함수를 만듦
   function setKittyContractAddress(address _address) external onlyOwner {
     kittyContract = KittyInterface(_address);
@@ -36,8 +42,7 @@ contract ZombieFeeding is ZombieFactory {
     return (_zombie.readyTime <= now);
   }
 
-  function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) internal {  // 남용을 막기 위해 public => internal로 바꿈
-    require(msg.sender == zombieToOwner[_zombieId]);  // 소유한 좀비만 feeding 가능하게 함
+  function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) internal onlyOwnerOf(_zombieId) {  // ownerOf를 통해 좀비 소유자 확인
     Zombie storage myZombie = zombies[_zombieId];     // 내 좀비를 zombies 배열에서 가져옴(storage 사용!)
     _targetDna = _targetDna % dnaModulus;             // target DNA를 16자리 수로 만듦
     uint newDna = (myZombie.dna + _targetDna) / 2;    // 물려서 변한 좀비의 DNA 계산
