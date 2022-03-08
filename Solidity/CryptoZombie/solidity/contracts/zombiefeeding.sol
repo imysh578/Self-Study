@@ -22,7 +22,7 @@ contract ZombieFeeding is ZombieFactory {
   KittyInterface kittyContract; 
 
   // 좀비 소유자 확인
-  modifier ownerOf(uint _zombieId) {
+  modifier onlyOwnerOf(uint _zombieId) {
     require(msg.sender == zombieToOwner[_zombieId]);
     _;
   }
@@ -42,7 +42,7 @@ contract ZombieFeeding is ZombieFactory {
     return (_zombie.readyTime <= now);
   }
 
-  function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) internal ownerOf(_zombieId) {  // ownerOf를 통해 좀비 소유자 확인
+  function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) internal onlyOwnerOf(_zombieId) {  // ownerOf를 통해 좀비 소유자 확인
     Zombie storage myZombie = zombies[_zombieId];     // 내 좀비를 zombies 배열에서 가져옴(storage 사용!)
     _targetDna = _targetDna % dnaModulus;             // target DNA를 16자리 수로 만듦
     uint newDna = (myZombie.dna + _targetDna) / 2;    // 물려서 변한 좀비의 DNA 계산
