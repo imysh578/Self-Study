@@ -8,11 +8,11 @@ func Add(a int, b int) int {
 
 // multi return
 func Divide(a, b int) (int, bool) {
-	if b == 0 {
-		return 0, false
-	} else {
-		return a / b, true
-	}
+	// if b == 0 {
+	// 	return 0, false
+	// } else {
+	// }
+	return a / b, true
 }
 
 func Divide2(a, b int) (result int, success bool) {
