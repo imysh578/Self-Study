@@ -1,9 +1,6 @@
 function solution(a, b) {
-  let answer = a.reduce((accu, curr, i) => {
-    return accu += curr * b[i]
-  }, 0)
-  
-  answer
+  let answer = a.reduce((accu, curr, i) => accu += curr * b[i], 0)
+
   return answer;
 }
 
