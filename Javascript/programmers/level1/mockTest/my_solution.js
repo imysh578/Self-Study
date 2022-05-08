@@ -11,7 +11,7 @@ function solution(answers) {
       return accu
     }, 0)
     return score
-  })
+  }) 
   let answer = []
   const max = Math.max(...result)
   result
