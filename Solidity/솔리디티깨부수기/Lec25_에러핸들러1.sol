@@ -22,4 +22,18 @@ contract lec25 {
     // 21338 gas 
     require(false, "Error!");
   }
+
+  function onlyAdult(uint256 _age) public pure returns(string memory) {
+    // 21616 gas
+    if(_age<19) { // 조건이 true일 때 에러 발생
+      revert("You are child");
+    } 
+    return "You are adult";
+  }
+
+  function onlyAdult2(uint256 _age) public pure returns(string memory) {
+    // 21569 gas
+    require(_age>19, "You are child"); // 조건이 false일 때 에러 발생
+    return "You are adult";
+  }
 }
