@@ -3,6 +3,7 @@
 - [Linux](Linux)
 - [Python](python)
 - [Solidity](Solidity)
-<!-- - [Javascript](js) -->
+- [JavaScript](js)
+- [TypeScript](js)
 <!-- - [Rust](Rust) -->
 <!-- - [C++](cpp) -->
