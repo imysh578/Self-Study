@@ -24,9 +24,13 @@ function solution(orders, course) {
 
 const getCombinations = (array, selectNum) => {
   const result = [];
-  if (selectNum === 1) return array.map((element) => [element]);
+  if (selectNum === 1) {
+    console.log(array);
+    return array.map((element) => [element])
+  };
   array.forEach((fixed, index, origin) => {
     const restCombinations = getCombinations(origin.slice(index + 1), selectNum - 1);
+    restCombinations
     const attached = restCombinations.map((restCombination) => {
       return [fixed, ...restCombination]
     });
@@ -36,5 +40,5 @@ const getCombinations = (array, selectNum) => {
 }
 
 // solution(["ABCFG", "AC", "CDE", "ACDE", "BCFG", "ACDEH"], [2,3,4])
-solution(["XYZ", "XWY", "WXA"], [2,3,4])
+solution(["XYZ", "XWY", "WXA"], [2])
 

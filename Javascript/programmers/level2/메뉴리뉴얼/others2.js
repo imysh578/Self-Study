@@ -16,7 +16,7 @@ function looper(menu, max, startIndex = 0, cur = 0, str = "") {
       );
     }
   }
-  
+  fullList
   return fullList;
 }
 
@@ -48,5 +48,5 @@ function solution(orders, course) {
   return answer.sort();
 }
 
-solution(["ABCFG", "AC", "CDE", "ACDE", "BCFG", "ACDEH"], [2,3,4])
-// solution(["XYZ", "XWY", "WXA"], [2,3,4])
+// solution(["ABCFG", "AC", "CDE", "ACDE", "BCFG", "ACDEH"], [2,3,4])
+solution(["XYZ", "XWY", "WXA"], [2,3,4])

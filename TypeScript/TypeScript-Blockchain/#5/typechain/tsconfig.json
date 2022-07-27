@@ -1,0 +1,14 @@
+{
+  "include": [
+    "src" // what file or folder to compile
+  ],
+  "compilerOptions": {
+    "outDir": "build", // where to store created js file
+    "target": "ES6", // Choose the version of JS to compile
+    "lib" : ["ES6"], // declaration files that describe the target runtime environment
+    "strict": true, // checking types strictly
+    // "allowJs": true, // allow to use js file
+    "esModuleInterop": true, // `import something` is available instead of `import * as something`
+    "module": "CommonJS"
+  }
+}
