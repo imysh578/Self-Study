@@ -7,6 +7,7 @@ The script from [the book](https://doc.rust-lang.org/book/ch01-01-installation.h
 ```shell
 $ curl --proto '=https' --tlsv1.3 https://sh.rustup.rs -sSf | sh
 ```
+- Error message: *curl: (4) A requested feature, protocol or option was not found built-in in this libcurl due to a build-time decision.*
 
 
 Instead, I used the below script from [official page's guide](https://www.rust-lang.org/tools/install).
@@ -20,8 +21,7 @@ Luckily, this one worked well.
 For now, the latest version is 1.65.0.
 ```shell
 $ rustc --version
-
-rustc 1.65.0 (897e37553 2022-11-02)
+# rustc 1.66.0 (69f9c33d7 2022-12-12)
 ```
 
 ### Update Rust
@@ -116,6 +116,7 @@ $ cargo build
    Compiling hello_cargo v0.1.0 (/Users/damon.yoon/hello_cargo)
     Finished dev [unoptimized + debuginfo] target(s) in 0.68s
 ```
+The build command will create ***target/debug***.
 
 To run,
 ```shell
@@ -133,6 +134,11 @@ $ cargo check
 ```
 
 ### Building for Release
+When the project is ready for realse, use the below command to compile it with optimizations.
 ```shell
-
+cargo build --release
 ```
+This command will create ***target/release***.
+
+- `cargo build`: for development, when you want to rebuild quickly and often
+- `cargo build --release`: for building final program you'll give to a user that won't be rebuilt repeatedly
