@@ -160,7 +160,9 @@ fn main() {
 }
 ```
 
-- **unit**: tuple without any values, written `()`
+> NOTE: **unit**
+tuple without any values, written `()`.
+Unit represents an empty value or an empty return type.
 
 ### 2-2. The Array Type
 
