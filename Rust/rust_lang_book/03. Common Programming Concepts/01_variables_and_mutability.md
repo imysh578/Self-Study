@@ -1,5 +1,4 @@
 # Variables and Mutability
-
 - By default, variables are immnutable
 
 Let's generate a new project.
@@ -51,4 +50,47 @@ $ cargo run
      Running `target/debug/variables`
 The value of x is: 5
 The value of x is: 6
+```
+
+## Constants
+- constants are not allowed to change
+- `const`: a keyword to declare constants
+- naming convention: use all uppercase with underscores between words
+
+- ***constants*** vs. ***variables***
+  - Cannot use `mut` with constants, but variables
+  - The type of constants must be annotated
+  - Constants can be declared in any scope, including the global scope
+  - Constants may be set only to a constant expression, not the result of a value that could only be computed at runtime
+
+- example
+```rust
+const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
+```
+
+## Shadowing
+- If we declare a new variable with the same name as a previous variable, the first variable is ***shadowed*** by the second.
+- We can shadow a variable until either it itself is shadowed or the scope ends.
+- `let varName = value` 
+
+Filename: **src/main.rs**
+```rust
+fn main() {
+    let x = 5;
+
+    let x = x + 1;
+
+    {
+        let x = x * 2;
+        println!("The value of x in the inner scope is: {x}");
+    }
+    
+    println!("The value of x is: {x}");
+}
+```
+
+shadowing with different type:
+```rust
+let spaces = "    "; // string type
+let spaces = spaces.len(); // number type
 ```
