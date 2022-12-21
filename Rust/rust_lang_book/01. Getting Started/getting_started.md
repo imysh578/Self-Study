@@ -136,7 +136,7 @@ $ cargo check
 ### Building for Release
 When the project is ready for realse, use the below command to compile it with optimizations.
 ```shell
-cargo build --release
+$ cargo build --release
 ```
 This command will create ***target/release***.
 

@@ -123,11 +123,11 @@ let mut bananas = 5; // mutable
 ### Receiving User Input
 ```rust
   io::stdin()
-    .read_line($mut guess)
+    .read_line(&mut guess)
 ```
 - `io::stdin()`: call the sidin function form io module, which will allow us to handle the user input
 - `.read_line`: take user input and append that into a string(without overwriting)
-- `$mut guess`: store the user input into the mutable variable
+- `&mut guess`: store the user input into the mutable variable
 - `&`: indicats that it is a reference(References are *immutable* by default)
 
 ### Handling Potential Failure with Result
