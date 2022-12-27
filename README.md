@@ -6,5 +6,5 @@
 - [Solidity](Solidity)
 - [JavaScript](Javascript)
 - [TypeScript](TypeScript)
-<!-- - [Rust](Rust) -->
+- [Rust](Rust) 
 <!-- - [C++](cpp) -->
