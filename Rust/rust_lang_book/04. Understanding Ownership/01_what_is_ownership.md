@@ -109,7 +109,7 @@ println!("{}", s); // This will print `hello, world!`
 
 ## 5. Variables and Data Interacting with Move
 
-- _Integer_
+- *Integer*
 
 ```rust
 let x = 5;  // bind the value 5 to x
@@ -117,7 +117,7 @@ let y = x;  // make copy of the value of x and bind it to y
             // As a result, x = y = 5
 ```
 
-- _String_
+- *String*
 
 ```rust
 let s1 = String::from("hello");
@@ -165,7 +165,8 @@ fn main() {
   - it's known as a **_move_**
   - `s1` was moved into `s2`
   - **NEVER** automatically create **_deep copies_** of the data
-    <img width="368" alt="image" src="https://user-images.githubusercontent.com/33863016/209628304-1cbf2253-f9e9-4dff-8543-31fbd8880d6d.png">
+
+  <img width="368" alt="image" src="https://user-images.githubusercontent.com/33863016/209628304-1cbf2253-f9e9-4dff-8543-31fbd8880d6d.png">
 
 ## 6. Variables and Data Interacting with Clone
 
@@ -179,6 +180,8 @@ fn main() {
     println!("s1 = {}, s2 = {}", s1, s2);
 }
 ```
+
+<img width="455" alt="image" src="https://user-images.githubusercontent.com/33863016/209684787-c6ff31b7-b2b6-46ac-ba37-a29d16702b09.png">
 
 ## 7. Stack-Only Data: Copy
 
