@@ -16,6 +16,7 @@ fn calculate_length(s: &String) -> usize {
     s.len()
 }
 ```
+
 - **reference**
   - ampersand(`&`) 
   - allow us to use the value without taking ownership
@@ -32,6 +33,7 @@ fn calculate_length(s: &String) -> usize {
 
 
 ### What if modify something we're borrowing?
+
 ```rust
 fn main() {
     let s = String::from("hello");
@@ -43,8 +45,9 @@ fn change(some_string: &String) {
     some_string.push_str(", world");
 }
 
-/** PANIC occurs at compile time. **/
+/* Compile occurs at compile time. */
 ```
+
 - Reference is immutable by default
 
 ## 1. Mutable References
@@ -66,7 +69,7 @@ fn change(some_string: &mut String) {
 
 - Mutable references have one big restriction:
   - cannot borrow more than once at a time
-  - preventing multiple mutable referecnes to the same data at the same time
+  - preventing multiple mutable references to the same data at the same time
 
 ```rust
 fn main() {
@@ -78,19 +81,20 @@ fn main() {
     println!("{}, {}", r1, r2);
 }
 
-/** PANIC occurs at compile time. **/
+/* Compile occurs at compile time. */
 ```
-- This restriction prevent data races at complie time.
+- This restriction prevent data races at compile time.
 > NOTE: **data races**
 A data race is similar to a race condition and happens when these three behaviors occur:
 > - Two or more pointers access the same data at the same time.
-> - At least one of the pointers is being used to wirte to the data.
+> - At least one of the pointers is being used to write to the data.
 > - There's no mechanism being used to synchronize access to the data.
 >
 > Data races cause undefined behavior and can be difficult to diagnose and fix when you're trying to track them down at runtime.
 
 
 - Creates a new scope using curly brackets to allow for multiple mutable references
+
 ```rust
 fn main() {
     let mut s = String::from("hello");
@@ -104,6 +108,7 @@ fn main() {
 ```
 
 - Also cannot have a mutable reference while we have an immutable one to the same value.
+
 ```rust
 fn main() {
     let mut s = String::from("hello");
@@ -115,10 +120,11 @@ fn main() {
     println!("{}, {}, and {}", r1, r2, r3);
 }
 
-/** PANIC occurs at compile time. **/
+/* Compile occurs at compile time. */
 ```
 
 - reference's scope starts from where it is introduced and continues through the last time that reference is used.
+
 ```rust
 fn main() {
     let mut s = String::from("hello");
@@ -132,6 +138,7 @@ fn main() {
     println!("{}", r3);
 }
 ```
+
 - These scopes don't overlap, so this code is allowed.
 
 
@@ -154,10 +161,11 @@ fn dangle() -> &String { // dangle returns a reference to a String
   // Danger!
 
 
-/** PANIC occurs at compile time. **/
+/* Compile occurs at compile time. */
 ```
 
 - The solution is to return the **String** directly:
+
 ```rust
 fn main() {
     let string = no_dangle();
@@ -169,6 +177,7 @@ fn no_dangle() -> String {
     s
 }
 ```
+
 ## 3. The Rules of References
 - At any given time, you can have either one mutable reference or any number of immutable references.
 - References must always be valid.

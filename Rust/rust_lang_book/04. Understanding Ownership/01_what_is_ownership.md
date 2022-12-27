@@ -7,7 +7,7 @@
     - garbage collection
     - explicitly allocate and free the memory
   - Rust
-    - manages the memory through a system of ownerhsip with a set of rules that the compiler checks.
+    - manages the memory through a system of ownership with a set of rules that the compiler checks.
     - If any of the rules are violated, the program won't compile.
 
 > NOTE: The **Stack** and the **Heap**
@@ -21,7 +21,7 @@
 >
 > 2. **Heap**
 >
-> - stores data that has unkown size at complie itme and the size might change
+> - stores data that has unknown size at compile time and the size might change
 > - When we put data on the heap, we request a certain amount of space.
 > - _allocating on the heap_: The memory allocator finds an empty spot in the heap that is big enough, marks it as being in use, and returns a _pointer_, which is the address of that location.
 >   <br>
@@ -62,7 +62,7 @@
   - are easy to be copied to make a new instance to use same value in a different scope.
 - **_String_** is the a great example to look at data that is stored on the heap.
 
-- **_string literals_** are not suitable for every situation, becuase...
+- **_string literals_** are not suitable for every situation, because...
 
   - they are _immutable_.
   - not every string value can be known when we write our code. (e.g., taking user input)
@@ -127,7 +127,7 @@ let s2 = s1;
 <img width="367" alt="image" src="https://user-images.githubusercontent.com/33863016/209625578-17aee9fc-0053-470d-aadf-1ee8dd1c63bb.png">
   
 - *String* is made up of 3 parts; ***pointer***, ***length*** and ***capacity***.
-  - **pointer**: pointing the memory that holds the contents of the string(stored on the stack)
+  - **pointer**: pointing the memory that holds the contents of the string
   - **length**(bytes): how much memory the contents of the String are currently using.
   - **capacity**(bytes): the total amount of the memory that the string has received from the allocator.
 
@@ -135,6 +135,7 @@ let s2 = s1;
 
 - The representation is **_NOT_** look like the below picture.
 - If Rust copied heap data as well like the below picture, the operation `s2 = s1` could be very expensive in terms of runtime performance.
+
   <img width="368" alt="image" src="https://user-images.githubusercontent.com/33863016/209625517-e576b4a9-065e-44b2-8901-0a12d8010abf.png">
 
 <br>
@@ -198,7 +199,7 @@ fn main() {
 - **Copy trait**
   - We can place on types that are stored on the stack, as integer are.
   - If a type implements the **Copy trait**, variables do not move, but rather are trivially copied, making them still valid after assignment to another variables.
-  - Can not annotate a type with **Copy** if the type, or any of its prats, has implemented **Drop trait**
+  - Can not annotate a type with **Copy** if the type, or any of its parts, has implemented **Drop trait**
 
 - The types that can implement **Copy**
   - All the integer types (e.g., `u32`)
@@ -238,7 +239,7 @@ fn makes_copy(some_integer: i32) { // some_integer comes into scope
 
 ```
 
-- If trying to use `s` after the call to `takes_ownership`, a complie-time error would occurs.
+- If trying to use `s` after the call to `takes_ownership`, a compile-time error would occurs.
 
 ## 9. Return Values and Scope
 - Returning values can also transfer ownership.
