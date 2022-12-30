@@ -105,7 +105,41 @@ fn first_word(s: &String) -> &str {
 }
 ```
 
-Returning a slice would also work for a second_word function:
+Returning a slice would also work for a `second_word` function:
 ```rust
 fn second_word(s:&String) -> &str {}
 ```
+
+
+Using the slice version of `first_word` will throw a compile-time error:
+```rust
+fn first_word(s: &String) -> &str {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+
+    &s[..]
+}
+
+fn main() {
+    let mut s = String::from("hello world");
+
+    let word = first_word(&s); // immutable borrow occurs here
+
+    s.clear(); // mutable borrow occurs here --> error!
+
+    println!("the first word is: {}", word); // immutable borrow later used here
+}
+
+/* Compile-time Error! */
+```
+
+- `word` has an **immutable** reference from `first_word(&s)`. 
+- `clear()` needs to truncate the `String`, so it needs to get a **mutable** reference.
+- After `clear()`, `word`'s reference is not valid any more.
+
+## String Literals as Slices
