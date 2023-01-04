@@ -59,7 +59,7 @@ fn main() {
   println!(
     "The area of the rectangle is {} square pixels.",
     area(&rect1)
-  )
+  );
 }
 
 fn area(rectangle: &Rectangle) -> u32 { // immutable borrow of a struct Rectangle instance

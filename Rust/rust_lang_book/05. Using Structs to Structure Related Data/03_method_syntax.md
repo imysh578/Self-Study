@@ -71,7 +71,44 @@ fn main() {
     println!("The rectangle has a nonzero width; it is {}", rect1.width);
   }
 }
-
 ```
+- `rect1.width`: field
+- `rect1.width()`: method
 
-## 
+<br>
+
+- Rust does not implement *getters* automatically for struct fields.
+- Getters are useful to make the field private but the method public. Thus enable read-only access to that field as part of the type's public API.
+
+> NOTE: Where is `->` operation?
+> In C and C++
+> - `.`: calling a method on the object directly
+> - `->`: calling the method on a pointer to the object and need to dereference the pointer first; if object is pointer, `object->something()` is similar to `(*objet).something()`.
+> In Rust,
+> - doesn't have `->` operation
+> - ***automatic referencing and dereferencing***: when we call a method with `object.something()`, Rust automatically adds in `&`, `&mut`, or `*`
+> ```rust
+> p1.distance(&p2);
+> (&p1).distance(&p2);
+> ```
+
+## Methods with More Parameters
+```rust
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+    let rect2 = Rectangle {
+        width: 10,
+        height: 40,
+    };
+    let rect3 = Rectangle {
+        width: 60,
+        height: 45,
+    };
+
+    println!("Can rect1 hold rect2? {}", rect1.can_hold(&rect2));
+    println!("Can rect1 hold rect3? {}", rect1.can_hold(&rect3));
+}
+```
