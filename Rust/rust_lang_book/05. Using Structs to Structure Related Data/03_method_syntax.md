@@ -81,12 +81,14 @@ fn main() {
 - Getters are useful to make the field private but the method public. Thus enable read-only access to that field as part of the type's public API.
 
 > NOTE: Where is `->` operation?
-> In C and C++
+> -  In C and C++,
 > - `.`: calling a method on the object directly
 > - `->`: calling the method on a pointer to the object and need to dereference the pointer first; if object is pointer, `object->something()` is similar to `(*objet).something()`.
-> In Rust,
+> <br>
+> - In Rust,
 > - doesn't have `->` operation
-> - ***automatic referencing and dereferencing***: when we call a method with `object.something()`, Rust automatically adds in `&`, `&mut`, or `*`
+> - ***automatic referencing and dereferencing***: when we call a method with `object.something()`, Rust automatically adds in `&`, `&mut`, or `*`.
+> - In other words, the following are the same:
 > ```rust
 > p1.distance(&p2);
 > (&p1).distance(&p2);
@@ -94,6 +96,81 @@ fn main() {
 
 ## Methods with More Parameters
 ```rust
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+
+    fn can_hold(&self, other: &Rectangle) -> bool {
+        self.width > other.width && self.height > other.height
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+    let rect2 = Rectangle {
+        width: 10,
+        height: 40,
+    };
+    let rect3 = Rectangle {
+        width: 60,
+        height: 45,
+    };
+
+    println!("Can rect1 hold rect2? {}", rect1.can_hold(&rect2));
+    println!("Can rect1 hold rect3? {}", rect1.can_hold(&rect3));
+}
+```
+- Methods can take multiple parameters after `self` parameter.
+- And those parameters work just like parameters in functions.
+
+## Associated Functions
+- ***associated functions***: all functions defined within an `impl` block
+- We can define associated functions that don't have `self` as their first parameter. (e.g., `String::from`) -> Thus they are **not method**!
+- Associated functions without `self` are often used for constructors that will return a new instance of the struct.
+
+```rust
+impl Rectangle {
+  fn square(size: u32) -> Self {
+    Self {
+      width: size,
+      height: size,
+    }
+  }
+}
+```
+- `Self`: aliases for the type that appears after the `impl` keyword; (e.g., `Rectangle`)
+- To call this associated functions, we use the `::` syntax with the struct name (e.g., `let sq = Rectangle::square(3);`)
+- `::` syntax: used for both associated functions and namespaces created by modules.
+
+## Multiple impl Blocks
+```rust
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+}
+
+impl Rectangle {
+    fn can_hold(&self, other: &Rectangle) -> bool {
+        self.width > other.width && self.height > other.height
+    }
+}
+
 fn main() {
     let rect1 = Rectangle {
         width: 30,
