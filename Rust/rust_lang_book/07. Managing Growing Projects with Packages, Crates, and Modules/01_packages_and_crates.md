@@ -28,7 +28,7 @@ Crates can contain modules, and the module may be defined in other files that ge
 - A package can contain as many binary crates as we like, but at most only one library crate.
 - A package must contain at least one crate, whether that's a library or binary crate.
 
-`cargo new`: creates a project containing..
+`cargo new`: creates a package containing..
 - *src/main.rs*
 - *Cargo.toml* file
 
