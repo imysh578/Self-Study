@@ -1,7 +1,5 @@
-/* use for the other items */
-use std::collections::HashMap;
+use restaurant::eat_at_restaurant;
 
 fn main() {
-    let mut map = HashMap::new();
-    map.insert(1, 2);
+    eat_at_restaurant()
 }

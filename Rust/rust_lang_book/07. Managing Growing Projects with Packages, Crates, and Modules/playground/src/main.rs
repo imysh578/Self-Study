@@ -1,25 +1,9 @@
-struct Person {
-    name: String,
-    age: u8,
-}
+use playground::{add_to_waitlist, ready_to_serve};
 
-impl Person {
-    fn new() -> Self {
-        Self {
-            name: String::from("Damon"),
-            age: 100,
-        }
-    }
-}
+use std::{fmt, io};
+use std::collections::HashMap;
 
 fn main() {
-    let x = Person {
-        name: String::from("PowerCoding"),
-        age: 99,
-    };
+    add_to_waitlist();
 
-    let y = Person::new();
-
-    println!("{}", x.name);
-    println!("{}", y.name);
 }

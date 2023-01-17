@@ -39,4 +39,4 @@ Cargo passes the crate root files to `rustc` to build the library or binary.
 If a package contains ***src/main.rs***, it only has a binary crate.
 If a package contains ***src/main.rs*** and ***src/lib.rs***, it has two crates: a binary and a library, both with the same name as the package.
 
-A package cna have multiple binary crates by placing files in the ***src/bin*** directory: each file will be a separate binary crate.
+A package can have multiple binary crates by placing files in the ***src/bin*** directory: each file will be a separate binary crate.
