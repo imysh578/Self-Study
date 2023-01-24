@@ -1,4 +1,4 @@
-# Storing LIsts of Values with Vectors
+# Storing Lists of Values with Vectors
 - Vectors
   - `Vec<T>`
   - store more than one value in a single data structure that puts all the values next to each other in memory.
