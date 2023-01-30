@@ -1,12 +1,14 @@
 fn main() {
-    let hello = "Здравствуйте";
+    use std::collections::HashMap;
 
-    let s = &hello[0..2];
+    let text = "hello world wonderful world";
 
-    println!("{hello}");
-    println!("{s}");
+    let mut map = HashMap::new();
 
-    for c in "Зд".chars() {
-        println!("{c}");
+    for word in text.split_whitespace() {
+        let count = map.entry(word).or_insert(0);
+        *count += 1;
     }
+
+    println!("{:?}", map);
 }
