@@ -1,6 +1,6 @@
 # Storing Keys with Associated Values in Hash Maps
 - Standard library `HashMap<K, V>`: mapping keys of type `K` to values of type `V`
-- Many programming languages support this kind of data, called hahs, map, object, hash table, dictionary, or associative array
+- Many programming languages support this kind of data, called hash, map, object, hash table, dictionary, or associative array
 Hash maps are useful when you want to look up data not by using an index, as you can with vectors, but by using a key that can be of any type.
 
 ## Creating a New Hash Map
@@ -133,12 +133,12 @@ It's common to check whether a particular key already exists in the hash map wit
     println!("{:?}", map);
 ```
 - `split_whitespace`: returns an iterator over sub-slices, separated by whitespace.
-- `or_insert`: returns a mutable reference (&mut V) to the value for specified key.
+- `or_insert`: returns a mutable reference (`&mut V`) to the value for specified key.
 - `*count`: to use existed value, we must dereference `count` using the asterisk(`*`).
 
 ## Hashing Functions
 By default, `HashMap` uses a hashing function called `SipHash` that can provide resistance to Denial of Service(DoS) attacks involving hash tables.
-- This is not fastest hashing algorithm available, but the trade=off for better security.
+- This is not fastest hashing algorithm available, but the trade-off for better security.
 
 If you want faster hash function, you can switch to another function by specifying a different hasher.
 - A *hasher* is a type that implements the `BuildHasher` trait.
