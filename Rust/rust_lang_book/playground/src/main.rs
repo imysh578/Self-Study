@@ -1,4 +1,4 @@
 use std::fs::File;
-main() {
+fn main() {
     let greeting_file = File::open("hello1.txt")?;
 }
