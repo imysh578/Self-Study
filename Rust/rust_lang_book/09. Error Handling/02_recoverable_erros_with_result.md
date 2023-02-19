@@ -325,7 +325,7 @@ fn main() {
 
 
 ### Where The `?` Operator Can Be used
-- `Result`, `Option`, `FromResidual`
+- `?` return types: `Result`, `Option`, `FromResidual`
 
 If using `?` in `main` function:
 ```rust
@@ -335,7 +335,6 @@ fn main() {
 }
 // Compile error!
 ```
-
 - This `main` function has the return type of `()`, not `Result`
 
 - `?` with `Option<T>`:
@@ -365,8 +364,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 ```
 - `Box<dyn Error>`: any kind of error
 
-- An executable written in Rust returns an integer when it exits.
-- A `main` function returns a `Result<(), E>` will exit with 
+- When a `main` function returns a `Result<(), E>`, the executable will exit with 
     - a value of 0 if `main` returns `Ok(())` 
     - a nonzero value if it returns an `Err`
 
