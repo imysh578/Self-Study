@@ -1,21 +1,15 @@
-struct Point<X1, Y1> {
-    x: X1,
-    y: Y1,
-}
-impl<X1, Y1> Point<X1, Y1> {
-    fn mixup<X2, Y2>(self, other: Point<X2, Y2>) -> Point<X1, Y2> {
-        Point {
-            x: self.x,
-            y: other.y,
-        }
-    }
-}
-
 fn main() {
-    let p1 = Point { x: 5, y: 10.3 };
-    let p2 = Point { x: "Hello", y: 'c' };
+    let string1 = String::from("abcd");
+    let string2 = "xyz";
 
-    let p3 = p1.mixup(p2);
+    let result = longest(string1.as_str(), string2);
+    println!("The longest string is {}", result);
+}
 
-    println!("p3.x = {}, p3.y = {}", p3.x, p3.y);
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
 }
