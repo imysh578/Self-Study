@@ -166,3 +166,150 @@ impl Summary for Tweet {
 ```
 
 Note that it isn’t possible to call the default implementation from an overriding implementation of that same method.
+
+## Traits as Parameters
+Define a `notify` function using the `Summary` trait's method that we implemented above:
+```rust
+pub fn notify(item: &impl Summary) {
+    println!("Breaking news! {}", item.summarize());
+}
+```
+- `item: &impl Summary`: we can call any methods on `item` that come from the `Summary` trait
+
+Multiple parameters:
+```rust
+pub fn notify(item1: &impl Summary, item2: &impl Summary) {
+    // ...
+}
+```
+
+ Using ***`impl` syntax*** to specify the ***trait bound*** results in the Rust compiler generating **polymorphic** code for the function.
+
+## Trait Bound Syntax
+```rust
+pub fn notify<T: Summary>(item: &T) {
+    println!("Breaking news! {}", item.summarize());
+}
+```
+
+Multiple parameters:
+```rust
+pub fn notify<T: Summary>(item1: &T, item2: &T) {
+    // ...
+}
+```
+
+Using a ***generic type parameter*** with a ***trait bound*** results in the Rust compiler generating **monomorphized** code for the function.
+(This means that a separate implementation of the function is created for each concrete type that is passed as an argument.)
+
+## Specifying Multiple Trait Bounds with the + Syntax
+We specify in the notify definition that item must implement both `Display` and `Summary`:
+```rust
+pub fn notify(item: &(impl Summary + Display)) {
+```
+
+trait bounds on generic types:
+```rust
+pub fn notify<T: Summary + Display>(item: &T) {
+```
+
+## Clearer Trait Bounds with where Clauses
+
+Using generic types for each trait bound:
+```rust
+fn some_function<T: Display + Clone, U: Clone + Debug>(t: &T, u: &U) -> i32 {
+```
+
+Using a `where` clause after function signature:
+```rust
+fn some_function<T, U>(t: &T, u: &U) -> i32
+where
+    T: Display + Clone,
+    U: Clone + Debug,
+{
+```
+
+## Returning Types that Implement Traits
+`impl Trait` syntax in the return postion:
+```rust
+fn returns_summarizable() -> impl Summary {
+    Tweet {
+        username: String::from("horse_ebooks"),
+        content: String::from(
+            "of course, as you probably already know, people",
+        ),
+        reply: false,
+        retweet: false,
+    }
+}
+```
+
+However, you can only use impl Trait if you’re returning a single type:
+```rust
+fn returns_summarizable(switch: bool) -> impl Summary {
+    if switch {
+        NewsArticle {
+            headline: String::from(
+                "Penguins win the Stanley Cup Championship!",
+            ),
+            location: String::from("Pittsburgh, PA, USA"),
+            author: String::from("Iceburgh"),
+            content: String::from(
+                "The Pittsburgh Penguins once again are the best \
+                 hockey team in the NHL.",
+            ),
+        }
+    } else {
+        Tweet {
+            username: String::from("horse_ebooks"),
+            content: String::from(
+                "of course, as you probably already know, people",
+            ),
+            reply: false,
+            retweet: false,
+        }
+    }
+}
+// Compile Error!
+```
+
+## Using Trait Bounds to Conditionally Implement Methods
+Recall that `Self` is a type alias for the type of the `impl` block.
+
+Example code:
+- the type `Pair<T>` has 
+    - `new` method for any types
+    - `cmp_display` method for `PartialOrd` trait and `Display` trait
+
+```rust
+use std::fmt::Display;
+
+struct Pair<T> {
+    x: T,
+    y: T,
+}
+
+impl<T> Pair<T> {
+    fn new(x: T, y: T) -> Self {
+        Self { x, y }
+    }
+}
+
+impl<T: Display + PartialOrd> Pair<T> {
+    fn cmp_display(&self) {
+        if self.x >= self.y {
+            println!("The largest member is x = {}", self.x);
+        } else {
+            println!("The largest member is y = {}", self.y);
+        }
+    }
+}
+```
+
+We can also conditionally implement a trait for any type that implements another trait.
+```rust
+impl<T: Display> ToString for T {
+    // --snip--
+}
+```
+
