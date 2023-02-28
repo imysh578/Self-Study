@@ -24,7 +24,7 @@ pub struct Tweet {
 
 impl Summary for Tweet {
     fn summarize(&self) -> String {
-        format!("{}: {}", self.username, self.content)
+        format!("{}: {}", self.username , self.content)
     }
 }
 

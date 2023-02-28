@@ -1,12 +1,17 @@
-fn divide(x: i32, y: i32) -> Result<i32, &'static str> {
-    if y == 0 {
-        return Err("division by zero");
-    }
-    Ok(x / y)
+pub fn add_two(a: i32) -> i32 {
+    internal_adder(a, 2)
 }
 
-#[test]
-fn test_divide() {
-    assert_eq!(divide(4, 2), Ok(2));
-    assert!(divide(4, 0).is_err());
+fn internal_adder(a: i32, b: i32) -> i32 {
+    a + b
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn internal() {
+        assert_eq!(4, internal_adder(2, 2));
+    }
 }

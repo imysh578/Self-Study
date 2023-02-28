@@ -33,7 +33,7 @@ mod tests {
     }
 }
 ```
-- `#{test}` annotation
+- `#[test]` annotation
     - this attribute indicates this is test function, so the test runner knows to treat this function as a test.
     - We can have non-test functions in the `tests` module, so we always need to indicate which functions are tests.
 
