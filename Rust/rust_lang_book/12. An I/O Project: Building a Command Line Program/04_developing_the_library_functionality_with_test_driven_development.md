@@ -93,5 +93,23 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 
     results
 }
-``
+```
 
+Now the `search` function should return only the lines that contain `query`, and our test should pass.
+
+
+## Using the `search` Function in the `run` Function
+Now that we find out `search` function is working as we expected. We need to call `search` function from our `run` function. 
+
+Filename: *src/lib.rs*
+```rust
+pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(config.file_path)?;
+
+    for line in search(&config.query, &contents) {
+        println!("{line}");
+    }
+
+    Ok(())
+}
+```
