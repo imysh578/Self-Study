@@ -1,0 +1,10 @@
+# Rust
+Cargo.lock
+target/
+neardev/
+
+# ts
+build
+
+# etc
+.DS_Store
