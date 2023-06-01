@@ -1,23 +1,24 @@
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Seo from "../components/Seo";
 import Link from "next/link";
 
-export default function Home() {
-    const [movies, setMovies] = useState();
+export default function Home({ results }) {
+    const router = useRouter();
 
-    useEffect(() => {
-        (async () => {
-            const { results } = await (await fetch("api/movies")).json();
-
-            setMovies(results);
-        })();
-    }, []);
+    function onClick(id, title) {
+        router.push(
+            {
+                pathname: `/movies/${id}`,
+                query: { title },
+            },
+            `/movies/${id}`
+        );
+    }
 
     return (
         <div className="container">
             <Seo title="Home" />
-            {!movies && <h4>Loading...</h4>}
-            {movies?.map((movie) => (
+            {results?.map((movie) => (
                 <div
                     onClick={() => onClick(movie.id, movie.original_title)}
                     className="movie"
@@ -28,7 +29,11 @@ export default function Home() {
                     />
                     <h4>
                         <Link
-                            href={`/movies/${movie.original_title}/${movie.id}`}
+                            href={{
+                                pathname: `/movies/${movie.id}`,
+                                query: { title: movie.original_title },
+                            }}
+                            as={`/movies/${movie.id}`}
                         >
                             {movie.original_title}
                         </Link>
@@ -62,4 +67,23 @@ export default function Home() {
             `}</style>
         </div>
     );
+}
+
+/**
+ * getServerSideProps()
+ * : 백엔드단(서버)에서 돌아가는 함수
+ * : 이 함수 이름은 변경하면 안됨!
+ * : 여기다가 API key를 쓰면 Client 단에서 절대 못보게 됨!
+ */
+export async function getServerSideProps() {
+    const { results } = await (
+        await fetch("http://localhost:3000/api/movies")
+    ).json();
+    // 백엔드에서 영화 리스트를 다 받아오기 전까진 html이 생성 안됨 -> 모든 데이터가 오기 전까지는 흰 화면만 보일 수 있음
+
+    return {
+        props: {
+            results,
+        },
+    };
 }
