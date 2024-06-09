@@ -146,7 +146,7 @@ fn main() {
 ### 2-1. The Tuple Type
 
 - a number of values with variety of types into one compound type
-- fixed length: onece declared, cannot change the size of it
+- fixed length: once declared, cannot change the size of it
 - `()`: list of values inside parentheses
 
 Filename: **src/main.rs**
@@ -243,4 +243,31 @@ Please enter an array index.
 10
 thread 'main' panicked at 'index out of bounds: the len is 5 but the index is 10', src/main.rs:14:19
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+
+
+
+
+# Playground
+```rs
+fn main() {
+    let mut tup: (i32, bool, char) = (500, true, 'a');
+    tup.2 = 'b';
+    println!("The value of tup is: {:?}", tup);
+
+    let arr: [i32; 5] = [1, 2, 3, 4, 5];
+    println!("The value of arr2 is: {:?}", arr);
+
+    let slice: &[i32]; 
+    slice = &[1, 2, 3, 4, 5];
+    println!("The value of slice is: {:?}", slice);
+    println!("The value of slice[0] is: {}", slice[0]);
+    println!("The value of slice[0] is: {}", slice.get(0).unwrap());
+
+    match slice.get(5) {
+        Some(&value) => println!("The value of slice[0] is: {}", value),
+        None => println!("There is no value at index 5"),
+    }
+}
+
 ```

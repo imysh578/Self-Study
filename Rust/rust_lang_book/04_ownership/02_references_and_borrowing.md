@@ -181,3 +181,52 @@ fn no_dangle() -> String {
 ## 3. The Rules of References
 - At any given time, you can have either one mutable reference or any number of immutable references.
 - References must always be valid.
+
+
+
+
+# Playground
+```rs
+fn main() {
+    let hello_world_string = String::from("hello, world");
+    let length = calculate_length(&hello_world_string);
+    println!("The length of '{}' is {}.", hello_world_string, length);
+
+    let mut hello_string = String::from("hello");
+    change_string(&mut hello_string);
+    println!("{}", hello_string);
+
+    /* Only one mutable reference is allowed at a time */ 
+    let mut test_string = String::from("test");
+
+    let r1 = &mut test_string;
+    println!("{}", r1);
+    // let r2 = &mut s; // error: cannot borrow `test_string` as mutable more than once at a time
+
+    /* Mutable and immutable references cannot coexist */ 
+    let mut test_string = String::from("test");
+    let r1 = &test_string;
+    let r2 = &test_string;
+    // let r3 = &mut test_string; // error: cannot borrow `test_string` as mutable because it is also borrowed as immutable
+    println!("{}, {}, {}", test_string, r1, r2);
+
+    /* Dangling references are not allowed */
+    // let reference_to_nothing = dangle(); // error: `some_string` does not live long enough
+}
+
+fn calculate_length(some_string: &String) -> usize { // immutable reference
+    some_string.len()
+}
+
+fn change_string(some_string: &mut String) {
+    some_string.push_str(", world");
+}
+
+/* 
+fn dangle() -> &String {
+    let some_string = String::from("hello");
+
+    &some_string // cannot return reference to local variable `some_string`
+}
+*/ 
+```

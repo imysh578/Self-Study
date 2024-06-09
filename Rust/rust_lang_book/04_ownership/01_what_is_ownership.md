@@ -296,3 +296,53 @@ fn calculate_length(s: String) -> (String, usize) {
 }
 
 ```
+
+
+# Playground
+```rs
+fn main() {
+    let hello = "hello";
+    let new_hello = hello;
+    println!("{}", hello);
+    println!("{}", new_hello);
+
+    let world = String::from("world");
+    let new_world = world;
+    let clone_world = new_world.clone(); // deep copy of the heap data
+    // println!("{}", world); // error: value borrowed here after move
+    println!("{}", new_world);
+    println!("{}", clone_world);
+
+    let test_string = String::from("test");
+    takes_ownership(test_string);
+    // println!("{}", test_string); // error: value borrowed here after move
+
+    let test_number = 5;
+    makes_copy(test_number);
+    println!("{}", test_number); // no error, because i32 is Copy trait
+
+    let given_string = gives_ownership();
+    println!("given string: {}", given_string);
+
+    let new_string = takes_and_gives_back(given_string);
+    println!("new string: {}", new_string); // moved value from given_string to new_string
+    // println!("given string: {}", given_string); // error: value borrowed here after move
+}
+
+fn takes_ownership(some_string: String) {
+    println!("{}", some_string);
+}
+
+fn makes_copy(some_integer: i32) {
+    println!("{}", some_integer);
+}
+
+fn gives_ownership() -> String {
+    let some_string = String::from("Some string");
+    some_string
+}
+
+fn takes_and_gives_back(some_string: String) -> String {
+    some_string
+}
+```

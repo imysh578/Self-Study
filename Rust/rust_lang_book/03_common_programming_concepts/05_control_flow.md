@@ -202,3 +202,82 @@ fn main() {
     println!("LIFTOFF!!!");
 }
 ```
+
+
+# Playground
+```rs
+fn main() {
+    // if statement
+    is_rain(true);
+    is_rain(false);
+
+    quantity_check(5);
+    quantity_check(10);
+    quantity_check(11);
+    
+    // loop statement
+    loop_num(5);
+
+    // while statement
+    let sum = sum_of_numbers(5);
+    println!("Sum of numbers: {}", sum);
+
+    // for statement
+    let numbers = [10, 13, 15, 20];
+    let sum = sum_of_numbers(&numbers);
+    println!("Sum of array: {}", sum);
+}
+
+
+fn is_rain(rain: bool) {
+    if rain {
+        println!("It's raining outside!");
+    } else {
+        println!("It's not raining outside!");
+    }
+}
+
+fn quantity_check(quantity: i32) {
+    if quantity > 10 {
+        println!("More than 10 items");
+    } else if quantity < 10 {
+        println!("Less than 10 items");
+    } else {
+        println!("Exactly 10 items");
+    }
+}
+
+fn loop_num(num: i32) {
+    let mut counter = 0;
+
+    loop {
+        counter+=1;
+        println!("Counter: {}", counter);
+        if counter >= num {
+            break;
+        }
+    }
+}
+
+fn sum_of_numbers(num: i32) -> i32 {
+    let mut sum = 0;
+    let mut counter = 1;
+
+    while counter <= num {
+        sum += counter;
+        counter += 1;
+    }
+
+    sum
+}
+
+fn sum_of_numbers(numbers: &[i32]) -> i32 {
+    let mut sum = 0;
+
+    for number in numbers.iter() {
+        sum += number;
+    }
+
+    sum
+}
+```
