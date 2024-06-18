@@ -1,0 +1,17 @@
+# Reference: https://www.youtube.com/watch?v=L8tWKqSMKUI&list=PL2q9pua8FpiUwVll2Alk8W_d3eN8IxJjO
+[package]
+name = "ActixWebTaskService"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+actix-web = "^4" # For web server
+uuid = {version= "^1.8", features = ["v4"]} 
+serde = {version = "^1", features = ["derive"]}  # For serialization
+aws-config = "^1.5"
+aws-sdk-dynamodb = "^1.34"
+env_logger = "^0.11"
+log = "^0.4"
+strum_macros = "^0.26.4" # For enum serialization
+strum = {version = "^0.26.2", features = ["derive"]} # For enum serialization
+derive_more = "^0.99" # For enum serialization
