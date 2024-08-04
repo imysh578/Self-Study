@@ -1,5 +1,4 @@
-// tests/problem1_test.rs
-use leetcode_solutions::problems::problem1::{ListNode, Solution};
+use leetcode::problems::lc_0021_merge_two_sorted_lists::*;
 
 fn create_list(vals: &[i32]) -> Option<Box<ListNode>> {
     let mut current = None;

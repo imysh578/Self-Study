@@ -7,7 +7,7 @@ pub struct ListNode {
 
 impl ListNode {
     #[inline]
-    fn new(val: i32) -> Self {
+    pub fn new(val: i32) -> Self {
         ListNode { next: None, val }
     }
 }
@@ -20,5 +20,7 @@ impl Solution {
         list2: Option<Box<ListNode>>,
     ) -> Option<Box<ListNode>> {
         // TODO: Answer here
+        let result_list = Box::new(ListNode::new(0));
+        None
     }
 }
