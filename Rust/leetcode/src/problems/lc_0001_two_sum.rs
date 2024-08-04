@@ -2,7 +2,6 @@ use std::collections::HashMap;
 
 pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
     // NOTE: The below method has O(n^2) complexity
-    //
     // for i in 0..nums.len() - 1 {
     //     for j in i + 1..nums.len() {
     //         if nums[i] + nums[j] == target {
@@ -31,8 +30,7 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
     for (i, &num) in nums.iter().enumerate() {
         let complement = target - num;
 
-        /* NOTE:
-         * if let
+        /* NOTE:: if let
          * - The if let statement works by checking if a variant of an enum matches a specific value and, if it does, extracting that value.
          * - It is used to match a value of an enum type with a specific pattern such as Option or Result
          * - It cannot be used with primitive types.
