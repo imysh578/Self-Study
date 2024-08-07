@@ -11,13 +11,37 @@ fn create_list(vals: &[i32]) -> Option<Box<ListNode>> {
 }
 
 #[test]
-fn test_merge_two_lists() {
+fn ex1() {
     let list1 = create_list(&[1, 2, 4]);
     let list2 = create_list(&[1, 3, 4]);
 
-    let merged_list = Solution::merge_two_lists(list1, list2);
+    let input = merge_two_lists(list1, list2);
 
-    let expected_list = create_list(&[1, 1, 2, 3, 4, 4]);
+    let expected_output = create_list(&[1, 1, 2, 3, 4, 4]);
 
-    assert_eq!(merged_list, expected_list);
+    assert_eq!(input, expected_output);
+}
+
+#[test]
+fn ex2() {
+    let list1 = create_list(&[]);
+    let list2 = create_list(&[]);
+
+    let input = merge_two_lists(list1, list2);
+
+    let expected_output = create_list(&[]);
+
+    assert_eq!(input, expected_output);
+}
+
+#[test]
+fn ex3() {
+    let list1 = create_list(&[1, 2, 4]);
+    let list2 = create_list(&[1, 3, 4, 5, 9]);
+
+    let input = merge_two_lists(list1, list2);
+
+    let expected_output = create_list(&[1, 1, 2, 3, 4, 4, 5, 9]);
+
+    assert_eq!(input, expected_output);
 }

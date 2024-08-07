@@ -12,15 +12,22 @@ impl ListNode {
     }
 }
 
-pub struct Solution;
-
-impl Solution {
-    pub fn merge_two_lists(
-        list1: Option<Box<ListNode>>,
-        list2: Option<Box<ListNode>>,
-    ) -> Option<Box<ListNode>> {
-        // TODO: Answer here
-        let result_list = Box::new(ListNode::new(0));
-        None
+pub fn merge_two_lists(
+    list1: Option<Box<ListNode>>,
+    list2: Option<Box<ListNode>>,
+) -> Option<Box<ListNode>> {
+    match (list1, list2) {
+        (None, None) => None,
+        (None, Some(list2)) => Some(list2),
+        (Some(list1), None) => Some(list1),
+        (Some(mut node1), Some(mut node2)) => {
+            if node1.val < node2.val {
+                node1.next = merge_two_lists(node1.next.take(), Some(node2));
+                Some(node1)
+            } else {
+                node2.next = merge_two_lists(Some(node1), node2.next.take());
+                Some(node2)
+            }
+        }
     }
 }
