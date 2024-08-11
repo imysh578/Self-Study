@@ -35,3 +35,18 @@ fn ex3() {
 
     assert_eq!(input, expected_output);
 }
+
+// #[test]
+// fn pointer_test() {
+//     let mut result = ListNode::new(0);
+//     let mut pointer = &mut result;
+//     let mut list1 = ListNode::from_vec(&[1, 2, 3]);
+//
+//     pointer.next = list1.take();
+//     // println!("{:?}", pointer);
+//     // println!("{:?}", result);
+//
+//     pointer = pointer.next.as_mut().unwrap();
+//     println!("{:?}", pointer);
+//     println!("{:?}", result);
+// }
