@@ -88,7 +88,7 @@ pub fn merge_two_lists(
      * Method3
      */
     let mut result = ListNode::new(0);
-    let mut pointer = &mut result;
+    let mut result_pointer = &mut result;
 
     let mut l1 = list1.clone();
     let mut l2 = list2.clone();
@@ -96,22 +96,22 @@ pub fn merge_two_lists(
     while let (Some(node1), Some(node2)) = (l1.as_mut(), l2.as_mut()) {
         if node1.val < node2.val {
             let next = node1.next.take();
-            pointer.next = l1.take();
+            result_pointer.next = l1.take();
             l1 = next;
         } else {
             let next = node2.next.take();
-            pointer.next = l2.take();
+            result_pointer.next = l2.take();
             l2 = next;
         }
-        pointer = pointer.next.as_mut().unwrap();
+        result_pointer = result_pointer.next.as_mut().unwrap();
     }
 
     if l1.is_some() {
-        pointer.next = l1;
+        result_pointer.next = l1;
     }
 
     if l2.is_some() {
-        pointer.next = l2;
+        result_pointer.next = l2;
     }
 
     result.next
