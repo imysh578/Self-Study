@@ -64,10 +64,10 @@ pub fn merge_two_lists(
     //
     // while l1.is_some() && l2.is_some() {
     //     if l1.as_ref().unwrap().val <= l2.as_ref().unwrap().val {
-    //         pointer.next = l1.take(); // pointer takes the ownership of l1, and l1 becomes None
-    //         pointer = pointer.next.as_mut().unwrap(); // set pointer as mutable reference to l1
-    //                                                  // => change the pointer to next node
-    //         l1 = pointer.next.take(); // set l1 as next node and pointer.next becomes None
+    //         pointer.next = l1.take();                    // pointer takes the ownership of l1, and l1 becomes None
+    //         pointer = pointer.next.as_mut().unwrap();    // set pointer as mutable reference to l1
+    //                                                      // => change the pointer to next node
+    //         l1 = pointer.next.take();                    // set l1 as next node and pointer.next becomes None
     //     } else {
     //         pointer.next = l2.take();
     //         pointer = pointer.next.as_mut().unwrap();
@@ -88,7 +88,7 @@ pub fn merge_two_lists(
      * Method3
      */
     let mut result = ListNode::new(0);
-    let pointer = &mut result;
+    let mut pointer = &mut result;
 
     let mut l1 = list1.clone();
     let mut l2 = list2.clone();
@@ -103,6 +103,7 @@ pub fn merge_two_lists(
             pointer.next = l2.take();
             l2 = next;
         }
+        pointer = pointer.next.as_mut().unwrap();
     }
 
     if l1.is_some() {
