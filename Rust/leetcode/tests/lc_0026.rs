@@ -9,7 +9,7 @@ fn ex1() {
     let result = remove_duplicates(&mut input);
 
     assert_eq!(result, expected_output);
-    assert_eq!(input[..result], expected_array[..]);
+    assert_eq!(input, expected_array[..]);
 }
 
 #[test]
@@ -21,5 +21,5 @@ fn ex2() {
     let result = remove_duplicates(&mut input);
 
     assert_eq!(result, expected_output);
-    assert_eq!(input[..result], expected_array[..]);
+    assert_eq!(input, expected_array[..]);
 }

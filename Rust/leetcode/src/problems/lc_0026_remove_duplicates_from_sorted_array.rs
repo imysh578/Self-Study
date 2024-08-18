@@ -1,13 +1,18 @@
 pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
-    let mut pointer = 0;
-    let mut current_num = 0;
+    if nums.is_empty() {
+        return 0;
+    }
 
-    for &mut num in &mut *nums {
-        if num > current_num {
-            nums[pointer] = num;
+    let mut pointer = 0;
+
+    for i in 1..nums.len() {
+        if nums[i] > nums[pointer] {
             pointer += 1;
-            current_num = num;
+            nums[pointer] = nums[i];
+        } else {
+            nums[i] = 0;
         }
     }
-    0
+
+    (pointer + 1) as i32
 }
