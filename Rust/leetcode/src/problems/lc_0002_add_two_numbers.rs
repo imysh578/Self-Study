@@ -27,7 +27,8 @@ pub fn add_two_numbers(
     l2: Option<Box<ListNode>>,
 ) -> Option<Box<ListNode>> {
     let mut result = ListNode::new(0);
-    let mut current = &mut result;
+    let mut carry = 0;
+    let mut pointer = &mut result;
 
     // let list1 = l1.clone();
     // let list2 = l2.clone();
@@ -37,18 +38,20 @@ pub fn add_two_numbers(
         (list1, None) => list1,
         (None, list2) => list2,
         (mut list1, mut list2) => {
-            while let (Some(node1), Some(node2)) = (list1.as_ref(), list2.as_ref()) {
-                let mut sum = current.val + node1.val + node2.val;
+            while list1.is_some() || list2.is_some() {
+                let sum = carry
+                    + list1.as_ref().map_or(0, |node| node.val)
+                    + list2.as_ref().map_or(0, |node| node.val);
 
-                if sum >= 10 {
-                    current.val = sum % 10;
-                    current.next = ListNode::new(1);
-                } else {
-                    current.val = sum;
-                    current.next = ListNode::new(0)
-                }
+                carry = sum / 10;
 
-                current = current.next;
+                let new_node = Box::new(ListNode::new(sum % 10));
+
+                pointer.next = Some(new_node);
+                pointer = pointer.next.as_mut().unwrap();
+
+                list1 = list1.and_then(|node| node.next);
+                list2 = list2.and_then(|node| node.next);
             }
 
             result.next
