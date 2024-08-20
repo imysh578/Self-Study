@@ -23,3 +23,27 @@ fn ex3() {
 
     assert_eq!(length_of_longest_substring(input), expected_output)
 }
+
+#[test]
+fn ex4() {
+    let input = String::from(" ");
+    let expected_output = 1;
+
+    assert_eq!(length_of_longest_substring(input), expected_output)
+}
+
+#[test]
+fn ex5() {
+    let input = String::from("aab");
+    let expected_output = 2;
+
+    assert_eq!(length_of_longest_substring(input), expected_output)
+}
+
+#[test]
+fn ex6() {
+    let input = String::from("dvdf");
+    let expected_output = 3;
+
+    assert_eq!(length_of_longest_substring(input), expected_output)
+}
