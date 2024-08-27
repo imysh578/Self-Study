@@ -47,3 +47,35 @@ fn ex6() {
 
     assert_eq!(length_of_longest_substring(input), expected_output)
 }
+
+#[test]
+fn ex7() {
+    let input = String::from("cdd");
+    let expected_output = 2;
+
+    assert_eq!(length_of_longest_substring(input), expected_output)
+}
+
+#[test]
+fn ex8() {
+    let input = String::from("ckilbkd");
+    let expected_output = 5;
+
+    assert_eq!(length_of_longest_substring(input), expected_output)
+}
+
+#[test]
+fn ex9() {
+    let input = String::from("anviaj");
+    let expected_output = 5;
+
+    assert_eq!(length_of_longest_substring(input), expected_output)
+}
+
+#[test]
+fn ex10() {
+    let input = String::from("umvejcuuk");
+    let expected_output = 6;
+
+    assert_eq!(length_of_longest_substring(input), expected_output)
+}

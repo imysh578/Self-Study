@@ -1,33 +1,32 @@
 pub fn length_of_longest_substring(s: String) -> i32 {
     use std::collections::HashMap;
 
-    let mut map = HashMap::new();
-    let mut map_counter = 0;
+    let mut current_map = HashMap::new();
     let mut longest_length = 0;
-
-    for c in s.chars() {
-        match map.get(&c) {
-            None => {
-                map.insert(c, map_counter);
-            }
-            Some(_) => {
-                let empty_map = HashMap::new();
-                map = empty_map;
-                map_counter = 0;
-                map.insert(c, map_counter);
-            }
-        }
-        map_counter += 1;
-
-        if longest_length < map_counter {
-            longest_length = map_counter;
-        }
-        println!("{:?}", map_counter);
-        println!("{:?}", map);
+    for (index, char) in s.chars().enumerate() {
+        current_map.insert(char, index as i32);
     }
 
-    if longest_length == 0 {
-        longest_length = map_counter;
+    for (index, char) in s.chars().enumerate() {
+        match current_map.get(&char) {
+            None => {
+                current_map.insert(char, index as i32);
+            }
+            Some(&start) => {
+                println!("{:?}, {:?}", char, index);
+                current_map.clear();
+
+                for val in start..index as i32 {
+                    current_map.insert(s.chars().nth(val as usize).unwrap(), val);
+                }
+            }
+        }
+
+        println!("{:?}", current_map);
+
+        if longest_length < current_map.len() as i32 {
+            longest_length = current_map.len() as i32;
+        }
     }
 
     longest_length
