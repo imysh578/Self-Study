@@ -3,7 +3,7 @@ pub fn length_of_longest_substring(s: String) -> i32 {
     use std::collections::HashMap;
 
     let mut map = HashMap::new();
-    let mut prev = 0;
+    let mut prev = -1;
     let mut longest_length = 0;
 
     for (curr, char) in s.chars().enumerate() {
@@ -13,9 +13,7 @@ pub fn length_of_longest_substring(s: String) -> i32 {
             prev += 1;
         }
 
-        longest_length = max(longest_length, curr as i32 - prev + 1);
-
-        map.insert(char, curr as i32);
+        longest_length = max(longest_length, curr as i32 - prev);
     }
 
     longest_length
