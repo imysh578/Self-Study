@@ -7,11 +7,22 @@ struct Input {
 
 #[test]
 fn ex1() {
-    let input = Input {
+    let mut input = Input {
         nums: vec![3, 2, 2, 3],
         val: 3,
     };
-    let expected_output = 3;
+    let expected_output = 2;
+
+    assert_eq!(remove_element(&mut input.nums, input.val), expected_output)
+}
+
+#[test]
+fn ex2() {
+    let mut input = Input {
+        nums: vec![0, 1, 2, 2, 3, 0, 4, 2],
+        val: 2,
+    };
+    let expected_output = 5;
 
     assert_eq!(remove_element(&mut input.nums, input.val), expected_output)
 }
