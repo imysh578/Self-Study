@@ -11,10 +11,11 @@ pub fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
         }
     }
 
-    for _index in count..nums.len() {
-        println!("{:?}", nums);
-        nums.remove(count);
-    }
+    /* Don't need to remove the rest part */
+    // for _index in count..nums.len() {
+    //     println!("{:?}", nums);
+    //     nums.remove(count);
+    // }
 
     count as i32
 }
