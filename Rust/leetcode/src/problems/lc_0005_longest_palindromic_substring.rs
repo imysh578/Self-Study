@@ -1,37 +1,40 @@
-pub fn longest_palindrome(s: String) -> String {
-    let mut longest = String::from("");
-    let mut current = String::from("");
-    let s_vec: Vec<char> = s.chars().collect();
+fn expand_around_center(s: &str, left: usize, right: usize) -> (usize, usize) {
+    let s = s.as_bytes();
+    let mut l = left;
+    let mut r = right;
 
-    if s.len() < 2 {
+    while l > 0 && r < s.len() && s[l - 1] == s[r] {
+        l -= 1;
+        r += 1;
+    }
+
+    (l, r)
+}
+
+pub fn longest_palindrome(s: String) -> String {
+    let len = s.len();
+
+    if len <= 1 {
         return s;
     }
 
-    for i in 1..s.len() - 1 {
-        let prev = s_vec[i - 1];
-        let curr = s_vec[i];
-        let next = s_vec[i + 1];
+    let mut start = 0;
+    let mut end = 0;
 
-        if current.is_empty() {
-            current = curr.to_string();
+    for i in 0..len {
+        let (l1, r1) = expand_around_center(&s, i, i);
+        let (l2, r2) = expand_around_center(&s, i, i + 1);
+
+        if r1 - l1 > end - start {
+            start = l1;
+            end = r1;
         }
 
-        match prev == next {
-            false => {
-                // TODO:
-            }
-            true => {
-                println!("i: {:?}", i);
-                current = [prev.to_string(), current, next.to_string()].join("");
-                println!("current: {:?}", current);
-            }
-        }
-
-        if longest.len() < current.len() {
-            longest = current.clone();
-            current.clear();
+        if r2 - l2 > end - start {
+            start = l2;
+            end = r2;
         }
     }
 
-    longest
+    s[start..end].to_string()
 }
