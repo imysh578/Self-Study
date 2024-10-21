@@ -23,3 +23,11 @@ fn ex3() {
 
     assert_eq!(reverse(input), expected_output);
 }
+
+#[test]
+fn ex4() {
+    let input = 1534236469;
+    let expected_output = 0;
+
+    assert_eq!(reverse(input), expected_output);
+}
